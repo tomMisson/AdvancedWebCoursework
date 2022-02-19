@@ -61,6 +61,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "shush" */ "../views/GeneDetails.vue"),
   },
+    {
+    path: "/restpassword",
+    name: "RestPassword",
+    component: () =>
+      import("../views/RestPassword.vue"),
+  },
 ];
 
 const router = createRouter({
