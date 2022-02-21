@@ -1,10 +1,11 @@
 <template>
   <div class="emailcontainer">
     <h2>Forgotten Password?</h2>
-      <input type = "text" class = "textbox" placeholder="Email" v-model="email"/>
-      <input @click="isShowing = true" value="Send">
-      <h1 v-show="isShowing"> Email has been sent to you, Please check your emails and verfity. </h1>  
+      <form @submit.prevent="RestPassword">
+       <input v-model="email" type = "text" class = "textbox" placeholder="Email"/>
+        <input type = "submit" class = "li" value="Send">
     <p> Need an account ? </p>
+      </form>
   </div>
 </template>
 
@@ -17,21 +18,24 @@ export default {
   {
     const email = ref("");
     const route = useRoute(); 
+    const Sendmessage = ("Email has been sent to you, Please check and verfity.");
 
-    function resetPassword(){
+  const RestPassword = ()=>{
       firebase
         .auth()
         .sendPasswordResetEmail(email.value)
+        .then(function() {
+         window.alert("Email has been sent to you, Please check and verfity. ");
+         Sendmessage;
+        })
         .catch(err =>alert(err.message));
     }
-
-    return { route, email, resetPassword };
+    return { RestPassword,
+            email,
+            route
+            };
   },
-  data() {
-    return {
-      isShowing:false,
-    }
-  }
+ 
 }
 </script>
 
@@ -57,4 +61,6 @@ div.emailcontainer{
   margin: auto;
   height: 500px;
 }
+</style>
+
 </style>
