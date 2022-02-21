@@ -21,9 +21,13 @@
     >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#"
+          <router-link
+            data-toggle="dropdown"
+            class="dropdown-toggle"
+            href="#"
+            to="/"
             >Home <b class="caret"></b
-          ></a>
+          ></router-link>
           <ul class="dropdown-menu">
             <li>
               <router-link class="dropdown-item" to="/genedetails"
