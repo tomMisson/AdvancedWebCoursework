@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
 import firebase from "firebase";
-import store from './store';
+import store from "./store";
 import Vuex from "vuex";
 
 const firebaseConfig = {
@@ -11,23 +11,20 @@ const firebaseConfig = {
   projectId: "advancedwebassignment",
   storageBucket: "advancedwebassignment.appspot.com",
   messagingSenderId: "451838322437",
-  appId: "1:451838322437:web:819a6ba925591c8ac8396c"
+  appId: "1:451838322437:web:819a6ba925591c8ac8396c",
 };
-
 
 const app = createApp(App);
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-firebase.auth().onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged((user) => {
   store.dispatch("fetchUser", user);
-  router.push({path: "/account"})
+  //router.push({ path: "/account" });
 });
 
-app.use(router)
-.use(store)
-.use(Vuex)
-.mount('#app');
+// the only way you can access the page is via button click is what im seeing i will see
+app.use(router).use(store).use(Vuex).mount("#app");
 
-export {firestore, auth}
+export { firestore, auth };

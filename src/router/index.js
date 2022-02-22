@@ -10,15 +10,13 @@ const routes = [
     path: "/account",
     name: "Account",
 
-    component: () =>
-      import( "../views/Account.vue"),
+    component: () => import("../views/Account.vue"),
   },
   {
     path: "/submitdata",
     name: "SubmitData",
 
-    component: () =>
-      import( "../views/SubmitData.vue"),
+    component: () => import("../views/SubmitData.vue"),
   },
   {
     path: "/help",
@@ -49,7 +47,12 @@ const routes = [
     path: "/genedetails",
     name: "GeneDetails",
 
-    component: () => import( "../views/GeneDetails.vue"),
+    component: () => import("../views/GeneDetails.vue"),
+  },
+  {
+    path: "/queryData",
+    name: "QueryData",
+    component: () => import("../views/QueryData.vue"),
   },
   {
     path: "/resetpassword",
@@ -64,7 +67,7 @@ const routes = [
     path: "/:catchAll(.*)",
     name: "404",
 
-    component: () => import( "../views/404.vue"),
+    component: () => import("../views/404.vue"),
   },
 ];
 
