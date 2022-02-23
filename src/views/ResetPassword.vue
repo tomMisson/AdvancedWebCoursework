@@ -20,12 +20,10 @@ export default {
   setup() {
     const email = ref("");
     const route = useRoute();
-
     const RestPassword = () => {
       firebase
         .auth()
         .sendPasswordResetEmail(email.value)
-        .then(function () {})
         .catch((err) => alert(err.message));
     };
     return { RestPassword, email, route };
