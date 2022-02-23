@@ -1,11 +1,14 @@
 <template>
-  <div class="emailcontainer">
+ <div class="emailcontainer">
     <h2>Forgotten Password?</h2>
-      <form @submit.prevent="RestPassword">
-       <input v-model="email" type = "text" class = "textbox" placeholder="Email"/>
-        <input type = "submit" class = "li" value="Send">
-    <p> Need an account ? </p>
-      </form>
+    <form @submit.prevent="RestPassword">
+      <input v-model="email" type="text" class="textbox" placeholder="Email" />
+      <input @click="isShowing ^= true" type="submit" class="li" value="Send" />
+      <h1 v-show="isShowing">
+        Email has been sent to you, Please check and verfity.
+      </h1>
+      <p>Need an account ?</p>
+    </form>
   </div>
 </template>
 
@@ -14,27 +17,25 @@ import {ref} from 'vue';
 import { useRoute } from "vue-router";
 import firebase from 'firebase';
 export default {
-  setup() 
-  {
+  setup() {
     const email = ref("");
-    const route = useRoute(); 
-    const Sendmessage = ("Email has been sent to you, Please check and verfity.");
+    const route = useRoute();
 
-  const RestPassword = ()=>{
+    const RestPassword = () => {
       firebase
         .auth()
         .sendPasswordResetEmail(email.value)
-        .then(function() {
-         Sendmessage;
-        })
-        .catch(err =>alert(err.message));
-    }
-    return { RestPassword,
-            email,
-            route
-            };
+        .then(function () {})
+        .catch((err) => alert(err.message));
+    };
+    return { RestPassword, email, route };
   },
-}
+  data() {
+    return {
+      isShowing: false,
+    };
+  },
+};
 </script>
 
 <style>
