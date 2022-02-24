@@ -92,12 +92,13 @@ import router from "../router";
 export default {
   setup() {
     const form = reactive({
+      id: "",
       name: "",
       email: "",
       password: "",
       address: "",
       phonenumber: "",
-      affiliation: "",
+      affiliation: ""
     });
 
     const error = reactive({
@@ -113,6 +114,7 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(form.email, form.password)
         .then((data) => {
+          console.log(data.user.id);
           success.value = true;
           return data;
         })
@@ -134,7 +136,8 @@ export default {
         firebase
         .firestore()
         .collection("/users")
-        .add({
+        .doc(form.email)
+        .set({
           name: form.name,
           email: form.email,
           address: form.address,
