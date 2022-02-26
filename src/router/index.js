@@ -19,6 +19,13 @@ const routes = [
     component: () => import("../views/SubmitData.vue"),
   },
   {
+    path: "/querydata",
+    name: "QueryData",
+
+    component: () =>
+      import( "../views/QueryData.vue"),
+  },
+  {
     path: "/help",
     name: "Help",
     // route level code-splitting

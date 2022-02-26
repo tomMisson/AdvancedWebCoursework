@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <h2>Forgotten Password?</h2>
-    <div class="row">
-      <input type = "text" class = "textbox" placeholder="Email" v-model="email"/>
-      <button class="btn btn-primary" @click="resetPassword">Send </button>
+    <div class="">
+      <input type = "text" class ="textbox w-75" placeholder="Email" v-model="email"/>
+      <button class="btn btn-primary my-2 w-75" @click="resetPassword">Send </button>
     </div>
     
     <router-link to="/register"> Need an account ?</router-link>
     
-    <div v-if="error.error" class="alert alert-warning" role="alert">
+    <div v-if="error.error" class="alert alert-warning w-75 my-3" role="alert">
       {{error.errorMessage}}
     </div>
 
-    <div v-if="success" class="alert alert-success" role="alert">
+    <div v-if="success" class="alert alert-success w-75 my-3" role="alert">
       Email has been sent to you, please check your emails and verify.
     </div>
   </div>
@@ -32,6 +32,8 @@ export default {
     const success= ref(false); 
 
     function resetPassword(){
+      error.error = false;
+
       firebase
       .auth()
       .sendPasswordResetEmail(email.value)

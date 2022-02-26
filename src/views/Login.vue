@@ -24,7 +24,8 @@
           v-model="form.password"
         />
       </div>
-      <button class="btn btn-primary" type="button" @click="submit">Login</button>
+      <button class="btn btn-primary my-3" type="button" @click="submit">Login</button>
+      <router-link to="/register"><button class="btn btn-primary m-3 " type="button">Register</button></router-link>
     </form>
     <div class="login">
      <p>Forgot your Password? 
@@ -57,16 +58,11 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(form.email, form.password)
+        .then(res => res?.user ? router.push({ path: '/account' }): null)
         .catch((err) => {
           error.error = true
           error.errorMessage = err
         });
-
-      const user = firebase.auth().currentUser;
-      
-      if (user){
-        router.push({ path: '/account' })
-      }
     }
   
   return {form, submit, error};

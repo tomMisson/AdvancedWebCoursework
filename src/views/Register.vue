@@ -33,7 +33,7 @@
       required
       v-model="form.password"
     />
-    <button class="btn btn-primary" type="button" @click="submit">Register</button>
+    <button class="btn btn-primary my-3" type="button" @click="submit">Register</button>
 
     <div v-if="error.error" class="alert alert-warning" role="alert">
       {{error.errorMessage}}
@@ -50,6 +50,7 @@
 <script>
 import firebase from "firebase";
 import { reactive, ref } from "vue";
+import router from '../router';
 
 export default {
   setup() {
@@ -71,15 +72,17 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(form.email, form.password)
+        .then((data) => {success.value = true; return data;})
         .then((data) => {
           data.user.updateProfile({
             displayName: form.name,
-          }).then(() => {success.value = true})
+          })
           .catch((err) => {
             error.error = true
             error.errorMessage = err
           });
         })
+        .then(() => router.push({path: "/account"}))
         .catch((err) => {
           error.error = true
           error.errorMessage = err

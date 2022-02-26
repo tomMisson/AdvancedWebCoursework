@@ -1,16 +1,28 @@
 <template>
-  <template v-if="user">
-    <h1> Welcome back {{ user?.displayName }}</h1>
-    <br/>
-    <h2>  Email address : {{ user?.email }}</h2>
-    <h2> Account Type : { { accountype } }</h2>
-    <h2> Phone number : { { phonenumber } }</h2>
-    <h2> Address : { { user-adress } }</h2>
-  </template>
+  <div class="container">
+    <template v-if="user">
+      <h1> Welcome back {{ user?.displayName }}</h1>
+      <br/>
+      <p>Email address: {{ user?.email }}</p>
+      <p>Account Type: { { accountype } }</p>
+      <p>Phone number: { { phonenumber } }</p>
+      <p>Address: { { user-adress } }</p>
 
-  <template v-else>
-    {{notLoggedInRedirect()}}
-  </template>
+      <h2>Submitted data</h2>
+
+      <table>
+        <thead>
+        </thead>
+
+        <tbody>
+        </tbody>
+      </table>
+    </template>
+
+    <template v-else>
+      {{notLoggedInRedirect()}}
+    </template>
+  </div>
 </template>
 
 <script>
