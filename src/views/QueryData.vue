@@ -4,33 +4,49 @@
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Cardiomyopathy Type</h4>
         <select class="form-select" id="CMtype">
-          <option value="HCM">Hypertrophic</option>
-          <option value="DIL">Dilated</option>
-          <option value="RES">Restrictive</option>
+          <option
+            v-for="CMtype in CMtypes"
+            :value="CMtype.shortName"
+            :key="CMtype.shortName"
+          >
+            {{ CMtype.name }}
+          </option>
         </select>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene">
-          <option value="HCM">Hypertrophic</option>
-          <option value="DIL">Dilated</option>
-          <option value="RES">Restrictive</option>
+          <option
+            v-for="mutation in mutationTypes"
+            :value="mutation"
+            :key="mutation"
+          >
+            {{ mutation }}
+          </option>
         </select>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>First dimension</h4>
         <select class="form-select" id="fd">
-          <option value="HCM">Hypertrophic</option>
-          <option value="DIL">Dilated</option>
-          <option value="RES">Restrictive</option>
+          <option
+            v-for="dimension in dimensions"
+            :value="dimension"
+            :key="dimension"
+          >
+            {{ dimension }}
+          </option>
         </select>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Second dimension</h4>
         <select class="form-select" id="sd">
-          <option value="HCM">Hypertrophic</option>
-          <option value="DIL">Dilated</option>
-          <option value="RES">Restrictive</option>
+          <option
+            v-for="dimension in dimensions"
+            :value="dimension"
+            :key="dimension"
+          >
+            {{ dimension }}
+          </option>
         </select>
       </div>
       <button class="btn btn-success mt-3" id="submit" @click="generateGraph">
@@ -52,13 +68,14 @@
 </template>
 
 <script>
+import { dimensions, mutationTypes, CMtypes } from "../scripts/graphing";
 export default {
   setup() {
     function generateGraph() {
       console.log("Generate graph");
     }
 
-    return { generateGraph };
+    return { generateGraph, dimensions, mutationTypes, CMtypes };
   },
 };
 </script>
