@@ -5,10 +5,9 @@
       <label for="name">Name</label>
       <input
         id="name"
-        type="name"
+        type="text"
         class="form-control"
         name="name"
-        value
         required
         autofocus
         v-model="form.name"
@@ -19,46 +18,35 @@
         type="email"
         class="form-control"
         name="email"
-        value
         required
-        autofocus
         v-model="form.email"
       />
-
       <label for="address">Address</label>
       <input
         id="address"
-        type="address"
+        type="text"
         class="form-control"
         name="address"
-        value
-        autofocus
         v-model="form.address"
       />
-
       <label for="phonenumber">Phone Number</label>
       <input
         id="phonenumber"
-        type="phonenumber"
+        type="tel"
         class="form-control"
         name="phonenumber"
-        value
-        autofocus
         v-model="form.phonenumber"
       />
-
       <label for="affiliation">Institutional Affiliation</label>
       <input
         id="affiliation"
-        type="affiliation"
+        type="text"
         class="form-control"
         name="affiliation"
         value
-        autofocus
         required
         v-model="form.affiliation"
       />
-
       <label for="password">Password</label>
       <input
         id="password"
@@ -88,6 +76,7 @@
 import firebase from "firebase";
 import { reactive, ref } from "vue";
 import router from "../router";
+import { firestore } from "../main";
 
 export default {
   setup() {
@@ -98,7 +87,7 @@ export default {
       password: "",
       address: "",
       phonenumber: "",
-      affiliation: ""
+      affiliation: "",
     });
 
     const error = reactive({
@@ -108,48 +97,63 @@ export default {
 
     const success = ref(false);
 
-    function submit() {
-      error.error = false;
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(form.email, form.password)
-        .then((data) => {
-          console.log(data.user.id);
-          success.value = true;
-          return data;
-        })
-        .then((data) => {
-          data.user
-            .updateProfile({
-              displayName: form.name,
-            })
-            .catch((err) => {
-              error.error = true;
-              error.errorMessage = err;
-            });
-        })
-        .then(() => router.push({ path: "/account" }))
-        .catch((err) => {
-          error.error = true;
-          error.errorMessage = err;
-        });
-        firebase
-        .firestore()
-        .collection("/users")
-        .doc(form.email)
-        .set({
-          name: form.name,
-          email: form.email,
-          address: form.address,
-          phonenumber: form.phonenumber,
-          affiliation: form.affiliation
-        })
-        .catch(function (error) {
-          console.error("Error adding user: ", error);
-        });
+    function validateForm() {
+      if (
+        form.name.length > 0 &&
+        form.email.length > 0 &&
+        form.password.length > 0 &&
+        form.address.length > 0 &&
+        form.phonenumber.length > 0 &&
+        form.affiliation.length > 0
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
-    return { submit, form, error };
+    function submit() {
+      error.error = false;
+      if (validateForm()) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(form.email, form.password)
+          .then((firebase) => {
+            firebase.user
+              .updateProfile({
+                displayName: form.name,
+                email: form.email,
+              })
+              .catch((err) => {
+                error.error = true;
+                error.errorMessage = err;
+              });
+
+            return firebase.user;
+          })
+          .then((data) =>
+            firestore.collection("users").doc(data?.uid).set({
+              name: form.name,
+              email: form.email,
+              address: form.address,
+              phonenumber: form.phonenumber,
+              affiliation: form.affiliation,
+              accountType: "user",
+            })
+          )
+          .then(() => router.push({ path: "/account" }))
+          .catch((err) => {
+            error.error = true;
+            error.errorMessage = err;
+          });
+      } else {
+        error.error = true;
+        error.errorMessage =
+          "Failed to validate form, please ensure all fields are filled out.";
+      }
+    }
+
+    return { submit, form, error, success };
   },
 };
 </script>

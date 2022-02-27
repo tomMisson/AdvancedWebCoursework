@@ -4,9 +4,9 @@
       <h1>Welcome back {{ user?.displayName }}</h1>
       <br />
       <p>Email address: {{ user?.email }}</p>
-      <p>Account Type: { { accountype } }</p>
-      <p>Phone number: {{ number }}</p>
-      <p>Address: {{ address }}</p>
+      <p>Account Type: {{ user?.accountType }}</p>
+      <p>Phone number: {{ user?.phonenumber }}</p>
+      <p>Address: {{ user?.address }}</p>
 
       <h2>Submitted data</h2>
 
@@ -18,16 +18,17 @@
     </template>
 
     <template v-else>
-      {{ notLoggedInRedirect() }}
+      <div class="alert alert-warning my-3" role="alert">
+        Please sign in to an account to view this page.
+      </div>
     </template>
   </div>
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import router from "../router/index";
-import firebase from "firebase";
 
 export default {
   setup() {
@@ -37,25 +38,11 @@ export default {
       return store.state.user?.data;
     });
 
-    let number = ref("");
-    let address = ref("");
-
-    const db = firebase.firestore().collection("/users").doc(user.value.email);
-
-    db.get().then((doc) => {
-      if (doc.exists) {
-        number.value = doc.data().phonenumber; 
-        address.value = doc.data().address;
-        } else {
-        console.log("No such document!");
-      }
-    });
-
     function notLoggedInRedirect() {
       router.push({ path: "/" });
     }
 
-    return { user, notLoggedInRedirect, number, address };
+    return { user, notLoggedInRedirect };
   },
 };
 </script>

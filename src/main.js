@@ -21,10 +21,8 @@ const auth = firebase.auth();
 
 firebase.auth().onAuthStateChanged((user) => {
   store.dispatch("fetchUser", user);
-  //router.push({ path: "/account" });
 });
 
-// the only way you can access the page is via button click is what im seeing i will see
 app.use(router).use(store).use(Vuex).mount("#app");
 
 export { firestore, auth };
