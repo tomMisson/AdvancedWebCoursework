@@ -56,8 +56,15 @@ export default {
   },
   setup() {
     function logOut() {
-      firebase.auth().signOut();
-      router.push({ path: "/" });
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          router.push("/");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
 
     return { logOut };
