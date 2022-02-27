@@ -37,8 +37,8 @@ export default {
       return store.state.user?.data;
     });
 
-    let number = ref("something");
-    let address = ref("something");
+    let number = ref("");
+    let address = ref("");
 
     const db = firebase.firestore().collection("/users").doc(user.value.email);
 
