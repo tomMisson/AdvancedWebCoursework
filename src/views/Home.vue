@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="message">
+    <h1>Cardiomyopathy Data Sharing Platform</h1>
     <div class="hero">
-      <h1>Cardiomyopathy Data Sharing Platform</h1>
       <p>
         Cardiomyopathy is a disease of the heart muscle that makes it harder for
         your heart to pump blood to the rest of your body. This platform allows
@@ -11,13 +11,20 @@
         easier consumption and interpretation.
       </p>
     </div>
-    <img class="heart" alt="Cardiac" src="../../public/assets/CardianTransparent2.png" />
+  </div>
+  <div class="bothhearts">
+    <img
+      class="heart"
+      alt="Cardiac"
+      src="../../public/assets/CardianTransparent2.png"
+    />
     <img
       class="heartsmall"
       alt="Cardiac"
       src="../../public/assets/CardianTransparent2.png"
     />
   </div>
+
   <CardsList :articles="articles" />
 </template>
 
@@ -31,19 +38,31 @@ export default {
   components: {
     CardsList,
   },
-  setup(){
+  setup() {
     const articles = ref([]);
 
-    onMounted(async() => {
+    onMounted(async () => {
       articles.value = await getArticles();
-    })
+    });
 
-    return {articles}
-  }
+    return { articles };
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.message {
+  /* incase */
+}
+
+.hero {
+  height: 15%;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 .heart {
   position: relative;
   top: -47px;
@@ -53,7 +72,6 @@ export default {
   width: 19%;
   transform: scaleX(-1);
 }
-
 .heartsmall {
   position: relative;
   top: -47px;
@@ -63,12 +81,20 @@ export default {
   width: 10%;
 }
 
-.cardiomessage {
+.bothhearts {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 114px;
+  float: right;
+  z-index: -999999;
+}
+
+h1 {
   height: 15%;
   width: 75%;
-  display: flex;
-  position: fixed;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  text-decoration: underline;
+  text-align: center;
 }
 </style>
