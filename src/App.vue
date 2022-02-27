@@ -6,14 +6,12 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { store } from "./main";
 
 export default {
   setup() {
-    const store = useStore();
-
     let isLoggedIn = computed(function () {
-      return store.state.user.loggedIn;
+      return store.getters.isLoggedIn;
     });
 
     return { isLoggedIn };

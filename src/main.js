@@ -20,9 +20,9 @@ const firestore = firebase.firestore();
 const auth = firebase.auth();
 
 firebase.auth().onAuthStateChanged((user) => {
-  store.dispatch("fetchUser", user);
+  store.dispatch("setUser", user);
 });
 
 app.use(router).use(store).use(Vuex).mount("#app");
 
-export { firestore, auth };
+export { firestore, auth, store };

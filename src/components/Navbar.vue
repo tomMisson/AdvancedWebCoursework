@@ -17,18 +17,18 @@
       </li>
 
       <template v-if="isLoggedIn">
-        <li v-if="isLoggedIn" class="nav-item">
+        <li class="nav-item">
           <router-link to="/querydata" class="nav-link">Query data</router-link>
         </li>
-        <li v-if="isLoggedIn" class="nav-item">
+        <li class="nav-item">
           <router-link to="/submitdata" class="nav-link"
             >Submit data</router-link
           >
         </li>
-        <li v-if="isLoggedIn" class="nav-item">
+        <li class="nav-item">
           <router-link to="/account" class="nav-link">Account</router-link>
         </li>
-        <li v-if="isLoggedIn" class="nav-item">
+        <li class="nav-item">
           <a href="#" class="nav-link" @click="logOut">Logout</a>
         </li>
       </template>

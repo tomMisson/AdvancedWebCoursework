@@ -16,6 +16,12 @@ export default new Vuex.Store({
   getters: {
     user(state){
       return state.user
+    },
+    userData(state){
+      return state.user.data
+    },
+    isLoggedIn(state){
+      return state.user.loggedIn
     }
   },
   mutations: {
@@ -27,7 +33,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    fetchUser({ commit }, user) {
+    setUser({ commit }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
         firestore.collection("users").doc(user.uid).get()

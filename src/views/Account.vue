@@ -27,15 +27,13 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
 import router from "../router/index";
+import { store } from "../main";
 
 export default {
   setup() {
-    const store = useStore();
-
     let user = computed(function () {
-      return store.state.user?.data;
+      return store.getters.userData;
     });
 
     function notLoggedInRedirect() {
