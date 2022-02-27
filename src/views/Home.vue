@@ -1,28 +1,25 @@
 <template>
-  <div class="message">
-    <h1>Cardiomyopathy Data Sharing Platform</h1>
-    <div class="hero">
-      <p>
+  <div class="px-4 py-2 my-5 text-center">
+    <img
+      class="d-block mx-auto mb-4"
+      src="../../public/assets/CardianTransparent2.png"
+      alt=""
+      height="150"
+    />
+    <h1 class="display-5 fw-bold" style="margin: auto">
+      Cardiomyopathy Data <br />
+      Sharing Platform
+    </h1>
+    <div class="col-lg-6 mx-auto my-3">
+      <p class="lead mb-4">
         Cardiomyopathy is a disease of the heart muscle that makes it harder for
         your heart to pump blood to the rest of your body. This platform allows
         the user to submit and keep track of their own data once they’ve
         registered to the website. The user can then view useful information
-        relating to cardiomyopathies in varius ways such as graphs and plots for
-        easier consumption and interpretation.
+        relating to cardiomyopathies in various ways such as graphs and plots
+        for easier consumption and interpretation.
       </p>
     </div>
-  </div>
-  <div class="bothhearts">
-    <img
-      class="heart"
-      alt="Cardiac"
-      src="../../public/assets/CardianTransparent2.png"
-    />
-    <img
-      class="heartsmall"
-      alt="Cardiac"
-      src="../../public/assets/CardianTransparent2.png"
-    />
   </div>
 
   <CardsList :articles="articles" />
@@ -50,11 +47,7 @@ export default {
 };
 </script>
 
-<style scoped>
-.message {
-  /* incase */
-}
-
+<style>
 .hero {
   height: 15%;
   width: 75%;
