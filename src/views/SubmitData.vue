@@ -14,13 +14,11 @@
         <template v-if="!isProcessing">
           <button class="btn btn-warning" @click="onSubmit"> Submit data </button>
         </template>
-
         <template v-else>
           <p>Populating</p>
         </template>
       </div>
     </form>
-
      <div v-if="error.error" class="alert alert-warning w-75 my-3" role="alert">
       {{error.errorMessage}}
     </div>
@@ -91,12 +89,8 @@
   </p>
    <button class="btn btn-warning" @click="onSubmit"> Submit data </button>
   </form>
-  </div>
-
 
 </template>
-
-
 <script>
 import { ref, reactive } from "vue";
 import { firestore } from "../main";
@@ -184,9 +178,8 @@ export default {
       }
     }
   }
-  
 }
 </script>
 <style>
-
 </style>
+

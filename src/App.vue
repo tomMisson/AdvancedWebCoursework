@@ -1,37 +1,29 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/genedetails">Gene Details</router-link> |
-    <router-link to="/submitdata">Submit Data</router-link> |
-    <router-link to="/account">Account</router-link> |
-     <router-link to="/login">Login</router-link> |
-     <router-link to="/signup">Register</router-link> |
-     <!-- <router-link to="/404">404</router-link> | -->
-
-
-  </div>
-  <router-view/>
+  <Navbar :isLoggedIn="isLoggedIn" />
+  <router-view />
 </template>
 
+<script>
+import Navbar from "./components/Navbar.vue";
+import { computed } from "vue";
+import { store } from "./main";
+
+export default {
+  setup() {
+    let isLoggedIn = computed(function () {
+      return store.getters.isLoggedIn;
+    });
+
+    return { isLoggedIn };
+  },
+  components: {
+    Navbar,
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.container:first-of-type {
+  margin-top: 30px;
 }
 </style>

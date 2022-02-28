@@ -1,35 +1,46 @@
 <template>
-  <div class="account">
-   <!-- <h1>Make sure you're logged in to view your account</h1> !-->
-    <h1> Welcome back { { username } }</h1>
+  <div class="container">
+    <template v-if="user">
+      <h1>Welcome back {{ user?.displayName }}</h1>
+      <br />
+      <p>Email address: {{ user?.email }}</p>
+      <p>Account Type: {{ user?.accountType }}</p>
+      <p>Phone number: {{ user?.phonenumber }}</p>
+      <p>Address: {{ user?.address }}</p>
+
+      <h2>Submitted data</h2>
+
+      <table>
+        <thead></thead>
+
+        <tbody></tbody>
+      </table>
+    </template>
+
+    <template v-else>
+      <div class="alert alert-warning my-3" role="alert">
+        Please sign in to an account to view this page.
+      </div>
+    </template>
   </div>
-  <div class = "account-info">
-    <h4> Name : { { username } }</h4>
-    <h4> Account Type : { { accountype } }</h4>
-    <h4> Email address : { { email } }</h4>
-    <h4> Phone number : { { phonenumber } }</h4>
-    <h4> Address : { { user-adress } }</h4>
-  </div>
-    <input type = "submit" class = "li" value="Submited Data">
 </template>
 
+<script>
+import { computed } from "vue";
+import router from "../router/index";
+import { store } from "../main";
 
+export default {
+  setup() {
+    let user = computed(function () {
+      return store.getters.userData;
+    });
 
-<style>
-h1{
-  font-size: 40px;
-}
-.account-info{
-  margin-right: 70%;
-  font-size: 25px;
-  margin-top: 90px;
-  margin: auto;
-}
-.li{
-  margin-left: 50%;
-  font-size: 30px;
-  margin-top: 90px;
-  margin: auto;
-}
+    function notLoggedInRedirect() {
+      router.push({ path: "/" });
+    }
 
-</style>
+    return { user, notLoggedInRedirect };
+  },
+};
+</script>
