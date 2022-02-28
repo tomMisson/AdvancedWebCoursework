@@ -51,10 +51,10 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
   },
   {
-    path: "/genedetails",
-    name: "GeneDetails",
+    path: "/explore",
+    name: "Explore",
 
-    component: () => import("../views/GeneDetails.vue"),
+    component: () => import("../views/Explore.vue"),
   },
   {
     path: "/queryData",
