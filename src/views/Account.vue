@@ -9,6 +9,7 @@
       <p>Address: {{ user?.address }}</p>
 
       <h2>Submitted data</h2>
+      <h5><router-link to="/editdata">Edit Data</router-link></h5>
 
       <table>
         <thead></thead>
