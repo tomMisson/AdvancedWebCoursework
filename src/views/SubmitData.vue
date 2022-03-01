@@ -25,100 +25,198 @@
     <div v-if="success.success" class="alert alert-success w-75 my-3" role="alert">
       Successfully added {{success.numRecords}} records to the database.
     </div>
-    <h2>Manual data insert</h2> 
+    <h2>Manual data insert</h2>  
     <form id="manualdata" v-if="!isProcessing"> 
-     <h5> (All input must be a number)</h5>
-     <p>Cardiomyopathy Type：
-    <select v-model="scar">
-      <option>Dilated cardiomyopathy</option>
-      <option>Hypertrophic cardiomyopathy</option>
-      <option>Restrictive cardiomyopathy</option>
-      <option>Arrhythmogenic right ventricular dysplasia</option>
-      <option>Unclassified cardiomyopathy</option>
-    </select>
-   </p>
-  <p>Left ventricular end diastolic volume (LEDV) :</p>
-         <input type="text" v-model="LEDV" @keypress="isNumber($event)"> 
-  <p>Right ventricular end diastolic volume (REDV) :</p>
-        <input type="text" v-model="REDV" @keypress="isNumber($event)">
-    <p>Left ventricular end systolic volume (LESV) : </p>
-        <input type="text" v-model="LESV" @keypress="isNumber($event)">
-    <p>Right ventricular end systolic volume (RESV) :</p>
-         <input type="text" v-model="RESV" @keypress="isNumber($event)">
-    <p>Left ventricular ejection fraction (LVEF) :</p>
-        <input type="text" v-model="LVEF" @keypress="isNumber($event)"> 
-    <p>Right ventricular ejection fraction (RVEF) :</p>
-        <input type="text" v-model="RVEF" @keypress="isNumber($event)">
-    <p>Left ventricular mass (LVMASS) : </p>
-        <input type="text" v-model="LVMASS" @keypress="isNumber($event)">
-    <p>Right ventricular mass (RVMASS) : </p>
-        <input type="text" v-model="RVMASS" @keypress="isNumber($event)">
-    <p>Left systolic volume (LSV) :</p>
-        <input type="text" v-model="LSV" @keypress="isNumber($event)">
-    <p>Right systolic volume (RSV) : </p>
-        <input type="text" v-model="LSV" @keypress="isNumber($event)">
-
-   <p>Fibrosis or Scarring：
-    <select v-model="scar">
-      <option>fibrosis</option>
-      <option>scarring</option>
-    </select>
-   </p>
-   <p>Gender :
-    <select v-model="gender">
-      <option>Male</option>
-      <option>Female</option>
-      <option>Prefer not to say</option>
-    </select>
-   </p>
-
-    <p>Age at MRI :
-    <input type="text" v-model="MRI" @keypress="isNumber($event)">
-  </p>
-    <p>Apical HCM :
-    <input type="radio" name="HCM" value="Yes" v-model="HCM"> Yes
-    <input type="radio" name="HCM" value="No" v-model="HCM"> No
-  </p>
-
-    <p>Sudden cardiac death : 
-    <input type="radio" name="SCD" value="Yes" v-model="SCD"> Yes
-    <input type="radio" name="SCD" value="No" v-model="SCD"> No
-  </p>
-    <p>Hypertension : 
-    <input type="radio" name="Hypertension" value="Yes" v-model="Hypertension"> Yes
-    <input type="radio" name="Hypertension" value="No" v-model="Hypertension"> No
-  </p>
-    <p>Diabetes : 
-    <input type="radio" name="diabetes" value="Yes" v-model="diabetes"> Yes
-    <input type="radio" name="diabetes" value="No" v-model="diabetes"> No
-  </p>
-    <p>Myectomy : 
-    <input type="radio" name="myectomy" value="Yes" v-model="myectomy"> Yes
-    <input type="radio" name="myectomy" value="No" v-model="myectomy"> No
-  </p>
+  <select class="Cardiomyopathy-select" aria-label="Cardiomyopathy Type">
+    <option selected>Cardiomyopathy Type</option>
+    <option value="1">Dilated cardiomyopathy</option>
+    <option value="2">Hypertrophic cardiomyopathy</option>
+    <option value="3">Restrictive cardiomyopathy</option>
+    <option value="4">Arrhythmogenic right ventricular dysplasia</option>
+    <option value="5">Unclassified cardiomyopathy</option>
+  </select>
+  <p></p>
+  <div class="LEDV">
+  <label for="LEDV" class="form-LEDV">Left ventricular end diastolic volume (LEDV): </label>
+  <input type="number" class="form-control" id="LEDV" placeholder="">
+  </div>
+  <div class="REDV">
+  <label for="REDV" class="form-REDV">Right ventricular end diastolic volume (REDV) : </label>
+  <input type="number" class="form-control" id="REDV" placeholder="">
+  </div>
+  <div class="LESV">
+  <label for="LESV" class="form-LESV">Left ventricular end systolic volume (LESV) :</label>
+  <input type="number" class="form-control" id="LESV" placeholder="">
+  </div>
+  <div class="RESV">
+  <label for="RESV" class="form-RESV">Right ventricular end systolic volume (RESV) : </label>
+  <input type="number" class="form-control" id="RESV" placeholder="">
+  </div>
+  <div class="LVEF">
+  <label for="LVEF" class="form-LVEF">Left ventricular ejection fraction (LVEF) :</label>
+  <input type="number" class="form-control" id="LVEF" placeholder="">
+  </div>
+  <div class="RVEF">
+  <label for="RVEF" class="form-RVEF">Right ventricular ejection fraction (RVEF) :</label>
+  <input type="number" class="form-control" id="RVEF" placeholder="">
+  </div>
+  <div class="LVMASS">
+  <label for="LVMASS" class="form-LVMASS">Left ventricular mass (LVMASS) : </label>
+  <input type="number" class="form-control" id="LVMASS" placeholder="">
+  </div>
+    <div class="RVMASS">
+  <label for="RVMASS" class="form-RVMASS">Right ventricular mass (RVMASS) :</label>
+  <input type="number" class="form-control" id="RVMASS" placeholder="">
+  </div>
+    <div class="LSV">
+  <label for="LSV" class="form-LSV">Left systolic volume (LSV) :</label>
+  <input type="number" class="form-control" id="LSV" placeholder="">
+  </div>
+    <div class="RSV">
+  <label for="RSV" class="form-RSV">Right systolic volume (RSV) :</label>
+  <input type="number" class="form-control" id="RSV" placeholder="">
+  </div>
+  <p></p>
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Scarring" value="option1">
+  <label class="form-check-label" for="Fibrosis">Fibrosis</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Scarring" value="option2">
+  <label class="form-check-label" for="Scarring">Scarring</label>
+</div>
+<p></p>
+  <select class="form-select" aria-label="Gender option">
+  <option selected>Gender: </option>
+  <option value="1">Male</option>
+  <option value="2">Female</option>
+  <option value="3">Prefer not to say</option>
+</select>
+  <p></p>
+  <div class="MRI">
+  <label for="MRI" class="form-MRI">Age at MRI :</label>
+  <input type="number" class="form-control" id="MRI" placeholder="">
+</div>
+  <p>Apical HCM : </p>
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="HCM" id="Yes">
+  <label class="form-check-label" for="Yes">
+    Yes
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="HCM" id="No" checked>
+  <label class="form-check-label" for="No">
+   No
+  </label>
+</div>
+  <p>Sudden cardiac death : </p>
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="SCD" id="Yes">
+  <label class="form-check-label" for="Yes">
+    Yes
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="SCD" id="No" checked>
+  <label class="form-check-label" for="No">
+   No
+  </label>
+</div>
+  <p> Hypertension : </p>
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="Hypertension" id="Yes">
+  <label class="form-check-label" for="Yes">
+    Yes
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="Hypertension" id="No" checked>
+  <label class="form-check-label" for="No">
+   No
+  </label>
+</div>
+  <p>Diabetes : </p>
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="Diabetes" id="Yes">
+  <label class="form-check-label" for="Yes">
+    Yes
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="Diabetes" id="No" checked>
+  <label class="form-check-label" for="No">
+   No
+  </label>
+</div>
+  <p>Myectomy : </p>
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="Myectomy" id="Yes">
+  <label class="form-check-label" for="Yes">
+    Yes
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="Myectomy" id="No" checked>
+  <label class="form-check-label" for="No">
+   No
+  </label>
+ </div>
     <p>HCM gene mutations :  </p>
-    <input type="radio" name="mutations" value="MYH7" v-model="myectomy"> MYH7
-    <input type="radio" name="mutations" value="MYBPC3" v-model="myectomy"> MYBPC3
-    <input type="radio" name="mutations" value="TNNT2" v-model="myectomy"> TNNT2
-    <input type="radio" name="mutations" value="ACTC" v-model="myectomy"> ACTC
-    <input type="radio" name="mutations" value="TPM1" v-model="myectomy"> TPM1
-    <input type="radio" name="mutations" value="TNNCI" v-model="myectomy"> TNNCI
-    <input type="radio" name="mutations" value="TNNI3" v-model="myectomy"> TNNI3
-    <input type="radio" name="mutations" value="MYL2" v-model="myectomy"> MYL2
-    <input type="radio" name="mutations" value="TTN" v-model="myectomy"> TTN
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="MYH7" value="MYH7">
+    <label class="form-check-label" for="MYH7">MYH7</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="MYBPC3" value="MYBPC3">
+    <label class="form-check-label" for="MYBPC3">MYBPC3</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="TNNT2" value="TNNT2">
+    <label class="form-check-label" for="TNNT2">TNNT2</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="ACTC" value="ACTC">
+    <label class="form-check-label" for="ACTC">ACTC</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="TPM1" value="TPM1">
+    <label class="form-check-label" for="TPM1">TPM1</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="TNNCI" value="TNNCI">
+    <label class="form-check-label" for="TNNCI">TNNCI</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="TNNI3" value="TNNI3">
+    <label class="form-check-label" for="TNNI3">TNNI3</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="MYL2" value="MYL2">
+    <label class="form-check-label" for="MYL2">MYL2</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="TTN" value="TTN">
+    <label class="form-check-label" for="TTN">TTN</label>
+    </div>
  <p></p>
-   <button class="btn btn-warning" @click="onSubmit"> Submit data </button>
+   <button class="btn btn-warning" @click="onSubmit"> Submit data </button>  
+ <p></p>
   </form>
-
+  </div>
 </template>
+
 <script>
 import { ref, reactive } from "vue";
 import { firestore } from "../main";
-import { convertCSVtoJson, extractDataAndConvertToModel } from "../scripts/fileupload";
+import {
+  convertCSVtoJson,
+  extractDataAndConvertToModel,
+} from "../scripts/fileupload";
 import firebase from "firebase";
 
 export default {
-  setup(){
+  setup() {
     const data = ref([]);
     const type = ref("");
     const isProcessing = ref(false);
@@ -126,7 +224,7 @@ export default {
       error: false,
       errorMessage: "",
     });
-    const success= reactive({
+    const success = reactive({
       success: false,
       numRecords: 0,
     });
@@ -135,22 +233,21 @@ export default {
 
     function onFileUploaded(event) {
       var reader = new FileReader();
-      try{
+      try {
         reader.onload = onReaderLoad;
+      } catch (err) {
+        error.error = true;
+        error.errorMessage = err;
       }
-      catch(err) {
-        error.error = true
-        error.errorMessage = err
-      }
-      
+
       type.value = event.target.files[0].type;
       reader.readAsText(event.target.files[0]);
     }
 
-    function onReaderLoad(event){
-      var obj = {}
-            
-      switch (type.value){
+    function onReaderLoad(event) {
+      var obj = {};
+
+      switch (type.value) {
         case "application/vnd.ms-excel":
           obj = convertCSVtoJson(event.target.result);
           break;
@@ -164,42 +261,33 @@ export default {
           throw "Unsupported document type. Please upload either a JSON or CSV document";
       }
 
-      data.value = extractDataAndConvertToModel(obj)
+      data.value = extractDataAndConvertToModel(obj);
     }
 
-    function onSubmit(){
+    function onSubmit() {
       isProcessing.value = true;
 
-      data.value.forEach(item => {
+      data.value.forEach((item) => {
         item["owner"] = uid;
-        firestore.collection("patientData").add(item)
-        .then(() => {
-          success.numRecords += 1;
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
+        item["createdAt"] = firebase.firestore.FieldValue.serverTimestamp();
+        firestore
+          .collection("patientData")
+          .add(item)
+          .then(() => {
+            success.numRecords += 1;
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
       });
 
       isProcessing.value = false;
       success.success = true;
     }
 
-    return {onFileUploaded, onSubmit, isProcessing, error, success}
+    return { onFileUploaded, onSubmit, isProcessing, error, success };
   },
-   methods: {
-    isNumber: function(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-        evt.preventDefault();
-      } else {
-        return true;
-      }
-    }
-  }
-}
+};
 </script>
 <style>
 </style>
-
