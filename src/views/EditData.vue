@@ -1,76 +1,165 @@
 <template>
-  <h2>Update Data</h2>
-  <form id="manualdata" v-if="!isProcessing" class="w-auto p-3">
-    <select class="Cardiomyopathy-select" aria-label="Cardiomyopathy Type">
-      <option selected>Cardiomyopathy Type</option>
-      <option value="1">Dilated cardiomyopathy</option>
-      <option value="2">Hypertrophic cardiomyopathy</option>
-      <option value="3">Restrictive cardiomyopathy</option>
-      <option value="4">Arrhythmogenic right ventricular dysplasia</option>
-      <option value="5">Unclassified cardiomyopathy</option>
-    </select>
-    <p></p>
+  <form id="manualdata" v-if="!isProcessing" class="w-auto p-3 was-validated">
+    <h2>Update Data</h2>
+    <div class="Cardiomyopathytype">
+      <select
+        class="Cardiomyopathy-select"
+        aria-label="Cardiomyopathy Type"
+        required
+      >
+        <option selected disabled value="">Choose Cardiomyopathy Type</option>
+        <option value="1">Dilated cardiomyopathy</option>
+        <option value="2">Hypertrophic cardiomyopathy</option>
+        <option value="3">Restrictive cardiomyopathy</option>
+        <option value="4">Arrhythmogenic right ventricular dysplasia</option>
+        <option value="5">Unclassified cardiomyopathy</option>
+      </select>
+      <div id="Cardiomyopathyvalidation" class="invalid-feedback">
+        Please select a valid Cardiomyopathy Type.
+      </div>
+      <p></p>
+    </div>
 
     <div class="LEDV">
       <label for="LEDV" class="form-LEDV"
         >Left ventricular end diastolic volume (LEDV):
       </label>
-      <input type="number" class="form-control" id="LEDV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="LEDV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="REDV">
       <label for="REDV" class="form-REDV"
         >Right ventricular end diastolic volume (REDV) :
       </label>
-      <input type="number" class="form-control" id="REDV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="REDV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LESV">
       <label for="LESV" class="form-LESV"
         >Left ventricular end systolic volume (LESV) :</label
       >
-      <input type="number" class="form-control" id="LESV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="LESV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RESV">
       <label for="RESV" class="form-RESV"
         >Right ventricular end systolic volume (RESV) :
       </label>
-      <input type="number" class="form-control" id="RESV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="RESV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LVEF">
       <label for="LVEF" class="form-LVEF"
         >Left ventricular ejection fraction (LVEF) :</label
       >
-      <input type="number" class="form-control" id="LVEF" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="LVEF"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RVEF">
       <label for="RVEF" class="form-RVEF"
         >Right ventricular ejection fraction (RVEF) :</label
       >
-      <input type="number" class="form-control" id="RVEF" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="RVEF"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LVMASS">
       <label for="LVMASS" class="form-LVMASS"
         >Left ventricular mass (LVMASS) :
       </label>
-      <input type="number" class="form-control" id="LVMASS" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="LVMASS"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RVMASS">
       <label for="RVMASS" class="form-RVMASS"
         >Right ventricular mass (RVMASS) :</label
       >
-      <input type="number" class="form-control" id="RVMASS" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="RVMASS"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LSV">
       <label for="LSV" class="form-LSV">Left systolic volume (LSV) :</label>
-      <input type="number" class="form-control" id="LSV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="LSV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RSV">
       <label for="RSV" class="form-RSV">Right systolic volume (RSV) :</label>
-      <input type="number" class="form-control" id="RSV" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="RSV"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <p></p>
 
@@ -95,18 +184,30 @@
       <label class="form-check-label" for="Scarring">Scarring</label>
     </div>
     <p></p>
-
-    <select class="form-select" aria-label="Gender option">
-      <option selected>Gender:</option>
-      <option value="1">Male</option>
-      <option value="2">Female</option>
-      <option value="3">Prefer not to say</option>
-    </select>
+    <div class="gender">
+      <select class="form-select" aria-label="Gender option" required>
+        <option selected disabled value="">Select Your Gender</option>
+        <option value="1">Male</option>
+        <option value="2">Female</option>
+        <option value="3">Prefer not to say</option>
+      </select>
+      <div id="Gendervalidation" class="invalid-feedback">
+        Please select a valid Gender.
+      </div>
+    </div>
     <p></p>
 
     <div class="MRI">
       <label for="MRI" class="form-MRI">Age at MRI :</label>
-      <input type="number" class="form-control" id="MRI" placeholder="" />
+      <input
+        type="number"
+        class="form-control"
+        id="MRI"
+        placeholder=""
+        required
+      />
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <p>Apical HCM :</p>
@@ -251,5 +352,5 @@
 export default {};
 </script>
 
-<style>
-</style>
+<style></style>
+
