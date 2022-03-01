@@ -279,6 +279,14 @@ export default {
           .catch((error) => {
             console.error("Error writing document: ", error);
           });
+        item["createdAt"] =  firebase.firestore.FieldValue.serverTimestamp();
+        firestore.collection("patientData").add(item)
+        .then(() => {
+          success.numRecords += 1;
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
       });
 
       isProcessing.value = false;

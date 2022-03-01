@@ -16,6 +16,10 @@
         <router-link to="/" class="nav-link">Home</router-link>
       </li>
 
+      <li class="nav-item">
+        <router-link to="/explore" class="nav-link">Explore</router-link>
+      </li>
+
       <template v-if="isLoggedIn">
         <li class="nav-item">
           <router-link to="/querydata" class="nav-link">Query data</router-link>
