@@ -62,6 +62,7 @@
     </div>
     <div class="row my-5">
       <h2 class="text-center mt-2">Graph</h2>
+
       <!-- GRAPH HERE -->
     </div>
   </div>

@@ -1,10 +1,19 @@
 <template>
   <div class="container">
     <h1>Explore more</h1>
-    <p>Looking to learn more about a specific mutation or Cardiomyopathy type? Simply enter a search term below and click to learn more</p>
+    <p>
+      Looking to learn more about a specific mutation or Cardiomyopathy type?
+      Simply enter a search term below and click to learn more
+    </p>
 
-    <form  @submit.prevent="submit" class="d-inline-flex">
-      <select class="form-select" name="typeSelect" autofocus v-model="searchType">
+    <form @submit.prevent="submit" class="d-inline-flex">
+      <select
+        class="form-select"
+        name="typeSelect"
+        autofocus
+        v-model="searchType"
+        @change="search"
+      >
         <option disabled value="">Please select one</option>
         <option value="gene" selected>Gene</option>
         <option value="cm">Term</option>
@@ -23,9 +32,18 @@
 
     <template v-if="geneResults">
       <div class="my-3">
-        <div class="card my-1" v-for="result in geneResults" :key="result.entrezGeneId" @click="getDetails(result.entrezGeneId)">
-          <div class="card-body" data-bs-toggle="modal" data-bs-target="#detailsModal">
-            {{result.entrezGeneSymbol}}
+        <div
+          class="card my-1"
+          v-for="result in geneResults"
+          :key="result.entrezGeneId"
+          @click="getDetails(result.entrezGeneId)"
+        >
+          <div
+            class="card-body"
+            data-bs-toggle="modal"
+            data-bs-target="#detailsModal"
+          >
+            {{ result.entrezGeneSymbol }}
           </div>
         </div>
       </div>
@@ -33,25 +51,54 @@
 
     <template v-if="cmResults">
       <div class="my-3">
-        <div class="card my-1" v-for="result in cmResults" :key="result.id" @click="getDetails(result.id)">
-          <div class="card-body" data-bs-toggle="modal" data-bs-target="#detailsModal">
-            {{result.name}}
+        <div
+          class="card my-1"
+          v-for="result in cmResults"
+          :key="result.id"
+          @click="getDetails(result.id)"
+        >
+          <div
+            class="card-body"
+            data-bs-toggle="modal"
+            data-bs-target="#detailsModal"
+          >
+            {{ result.name }}
           </div>
         </div>
       </div>
     </template>
 
     <!-- Modal -->
-    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="detailsModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{detailsResult.name}}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ detailsResult.name }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-            {{detailsResult.summary}}
-            {{detailsResult.definition}}
+            {{ detailsResult.summary }}
+            {{ detailsResult.definition }}
+          </div>
+          <div class="modal-footer">
+            <a target="_blank" :href="detailsResult.href"
+              ><button type="button" class="btn btn-primary">
+                View more
+              </button></a
+            >
           </div>
         </div>
       </div>
@@ -64,9 +111,9 @@ import {
   searchForGenes,
   searchForCardioMyopathies,
   getGeneDetailsFromSearchResult,
-  getCardiomyopathyDetailsFromSearchResult
+  getCardiomyopathyDetailsFromSearchResult,
 } from "../scripts/genesearch";
-import {ref} from "vue";
+import { ref } from "vue";
 export default {
   setup() {
     const searchTerm = ref("");
@@ -76,34 +123,58 @@ export default {
     const cmResults = ref([]);
     const detailsResult = ref({});
 
-    async function search(){
-      geneResults.value = []
-      cmResults.value = []
+    async function search() {
+      geneResults.value = [];
+      cmResults.value = [];
 
       switch (searchType.value) {
         case "gene":
           geneResults.value = await searchForGenes(searchTerm.value);
           break;
         case "cm":
-          cmResults.value = await searchForCardioMyopathies(searchTerm.value);
+          var results = await searchForCardioMyopathies(searchTerm.value);
+          console.log(
+            results.filter((obj) => obj.name.includes("cardiomyopathy"))
+          );
+
+          cmResults.value = results.filter((obj) =>
+            obj.name.includes("cardiomyopathy")
+          );
+
           break;
       }
     }
 
-    async function getDetails(id){
-      detailsResult.value = {}
+    async function getDetails(id) {
+      detailsResult.value = {};
       switch (searchType.value) {
         case "gene":
           detailsResult.value = await getGeneDetailsFromSearchResult(id);
+          detailsResult.value.href =
+            "https://hpo.jax.org/app/browse/gene/" + detailsResult.value.uid;
           break;
         case "cm":
-          detailsResult.value = await getCardiomyopathyDetailsFromSearchResult(id);
+          detailsResult.value = await getCardiomyopathyDetailsFromSearchResult(
+            id
+          );
+          detailsResult.value.href =
+            "https://hpo.jax.org/app/browse/term/" + detailsResult.value.id;
           break;
       }
-      console.log(detailsResult.value)
+      console.log(detailsResult.value);
     }
 
-    return {searchTerm, searchType, search, geneResults, cmResults, getDetails, detailsResult}
-  }
-}
+    return {
+      searchTerm,
+      searchType,
+      search,
+      geneResults,
+      cmResults,
+      getDetails,
+      detailsResult,
+    };
+  },
+};
 </script>
+
+<style scoped></style>
