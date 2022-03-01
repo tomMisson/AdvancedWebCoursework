@@ -4,6 +4,7 @@ import router from "./router";
 import firebase from "firebase";
 import store from "./store";
 import Vuex from "vuex";
+import VueApexCharts from "vue3-apexcharts";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB86JL8qR8tG-KMiMHuCuVN5VgkyZfepKw",
@@ -23,6 +24,6 @@ firebase.auth().onAuthStateChanged((user) => {
   store.dispatch("setUser", user);
 });
 
-app.use(router).use(store).use(Vuex).mount("#app");
+app.use(router).use(store).use(Vuex).use(VueApexCharts).mount("#app");
 
 export { firestore, auth, store };

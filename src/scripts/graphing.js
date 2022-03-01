@@ -1,37 +1,55 @@
-export const dimensions = [
-    // in the next itteration, we get these from the DB
-    // Will also need to get keys for this
-    "ledv/redv",
-    "lesv/resvc",
-    "lvef/rvef",
-    "lvmass/rvmass",
-    "lsv/rsv",
-    "scar",
-    "gender",
-    "Age at MRI",
-    "apical HCM",
-    "sudden cardiac death",
-    "hypertension",
-    "diabetes",
-    "myectomy",
-];
+import {firestore} from "../main"
+export const CMtypes = ["Hypertrophic","Dilated","Restrictive"];
 
-export const mutationTypes = [
-    // in the next itteration, we get these from the DB
-    "MYH7","MYBPC3","TNNT2","ACTC","TPM1","TNNCI","TNNI3","MYL2","TTN"
-];
+export async function getSelectionsForGraphing() {
+    const dimensions = [];
+    const mutationTypes = [];
 
-export const CMtypes = [
-    {
-        name: "Hypertrophic",
-        shortName: "HCM",
-    },
-    {
-        name: "Dilated",
-        shortName: "DIL",
-    },
-    {
-        name: "Restrictive",
-        shortName: "RES",
+    await firestore.collection("patientData")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            Object.keys(data).forEach((key) => {
+                if(key !== "mutatedGenes" && key !== "owner" && key !== "createdAt")
+                    dimensions.indexOf(key) === -1 ? dimensions.push(key) : null;
+                else if (key === "mutatedGenes"){
+                    data[key].forEach(mutation => {
+                        mutationTypes.indexOf(mutation) === -1 ? mutationTypes.push(mutation) : null;
+                    });
+                }
+            });  
+        });
+        
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+
+    return {dimensions, mutationTypes}
+}
+
+export async function getDataForDimension(gene, dimensionName) {
+    const dataPoints = [];
+
+    if(dimensionName === ""){
+        return dataPoints
     }
-];
+
+    await firestore.collection("patientData")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            if(data[dimensionName] && data.mutatedGenes.includes(gene)){
+                dataPoints.push(data[dimensionName]);
+            }
+        });
+        
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+
+    return dataPoints
+}

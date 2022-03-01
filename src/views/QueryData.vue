@@ -3,19 +3,22 @@
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Cardiomyopathy Type</h4>
-        <select class="form-select" id="CMtype">
+        <select class="form-select" id="CMtype" v-model="cmType">
           <option
-            v-for="CMtype in CMtypes"
-            :value="CMtype.shortName"
-            :key="CMtype.shortName"
+            v-for="type in CMtypes"
+            :value="type"
+            :key="type"
           >
-            {{ CMtype.name }}
+            {{ type }}
           </option>
         </select>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
-        <select class="form-select" id="Gene">
+        <select class="form-select" id="Gene" v-model="geneSelection">
+          <option disabled value="">
+            Select one
+          </option>
           <option
             v-for="mutation in mutationTypes"
             :value="mutation"
@@ -27,7 +30,10 @@
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>First dimension</h4>
-        <select class="form-select" id="fd">
+        <select class="form-select" id="fd" v-model="firstDimension">
+          <option disabled value="">
+            Select one
+          </option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -39,7 +45,10 @@
       </div>
       <div class="col-lg-3 col-md-6 col-sm-12">
         <h4>Second dimension</h4>
-        <select class="form-select" id="sd">
+        <select class="form-select" id="sd" v-model="secondDimension">
+          <option disabled value="">
+            None
+          </option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -52,30 +61,144 @@
       <button class="btn btn-success mt-3" id="submit" @click="generateGraph">
         Generate
       </button>
+      <div v-if="error.error" class="alert alert-danger my-2" role="alert">
+        {{error.errorMessage}}
+      </div>
     </div>
-    <div class="row">
-      <h2 class="text-center mt-5">Graph type</h2>
-      <label>
-        <input type="radio" name="graph" value="bar" />
-        Bar
-      </label>
+    <div class="col">
+      <h2 class="text-center mt-3">Graph type</h2>
+      <div class="mt-5 text-center">
+        <label class="mx-2">
+          <input checked type="radio" class="form-check-input" name="graph" value="bar" v-model="graphType"/>
+          Bar
+        </label>
+        <label class="mx-2">
+          <input type="radio" class="form-check-input" name="graph" value="line" v-model="graphType"/>
+          Line
+        </label>
+        <label class="mx-2">
+          <input type="radio" class="form-check-input" name="graph" value="area" v-model="graphType"/>
+          Area
+        </label>
+        <label class="mx-2">
+          <input type="radio" class="form-check-input" name="graph" value="scatter" v-model="graphType"/>
+          Scatter
+        </label>
+      </div>
     </div>
     <div class="row my-5">
       <h2 class="text-center mt-2">Graph</h2>
-      <!-- GRAPH HERE -->
+      <graph 
+        :type=graphType
+        :series=series
+        :chartOptions=chartOptions
+        class="my-4 text-center"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { dimensions, mutationTypes, CMtypes } from "../scripts/graphing";
+import Graph from "@/components/Graph";
+import { getSelectionsForGraphing, CMtypes, getDataForDimension } from "../scripts/graphing";
+import {ref, onMounted, reactive} from "vue";
+
 export default {
+  components: { 
+    Graph
+  },
   setup() {
-    function generateGraph() {
-      console.log("Generate graph");
+    const graphType = ref("bar");
+    const dimensions =  ref({});
+    const mutationTypes = ref({});
+
+    const cmType = ref("Hypertrophic");
+    const geneSelection = ref("");
+    const firstDimension = ref("");
+    const secondDimension = ref("");
+
+    const error = reactive({
+      error: false,
+      errorMessage: "",
+    });
+
+    const chartOptions = ref({
+        xaxis: {
+          title: {text:""},
+          labels: {
+            show: false
+          },
+          categories: [],
+        },
+    });
+
+    const series = ref([
+      {
+        data: [],
+      },
+    ]);
+
+    onMounted(async () => {
+      const filters = await getSelectionsForGraphing();
+      dimensions.value = filters.dimensions;
+      mutationTypes.value = filters.mutationTypes;
+    });
+    
+    async function generateGraph() {
+      error.error = false
+
+      if(firstDimension.value && geneSelection.value)
+      {
+        const colors = ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"];
+        chartOptions.value = {
+          xaxis: {
+            title: {
+              text: geneSelection.value
+            },
+            labels: {
+              show: false
+            },
+          },
+          yaxis: {
+            title: {
+              text: firstDimension.value
+            },
+            labels: { 
+              formatter: (value)=>{ return isNaN(value) ? value : Math.round(value * 100) / 100}
+            }
+          },
+          colors: [colors[Math.floor(Math.random() * colors.length)]],
+        };
+
+        console.log( await getDataForDimension(geneSelection.value, firstDimension.value))
+
+        series.value = [
+          {
+            data: await getDataForDimension(geneSelection.value, firstDimension.value)
+          },
+        ];
+      }
+
+      else {
+        error.error = true
+        error.errorMessage = "Unable to generate graph due to invalid criteria selection"
+      }
     }
 
-    return { generateGraph, dimensions, mutationTypes, CMtypes };
+    return { 
+      cmType,
+      geneSelection,
+      firstDimension,
+      secondDimension,
+      generateGraph, 
+      dimensions, 
+      mutationTypes, 
+      CMtypes, 
+      graphType, 
+      series, 
+      chartOptions, 
+      error
+    };
   },
 };
 </script>
