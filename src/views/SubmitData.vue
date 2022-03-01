@@ -94,6 +94,7 @@ export default {
 
       data.value.forEach(item => {
         item["owner"] = uid;
+        item["createdAt"] =  firebase.firestore.FieldValue.serverTimestamp();
         firestore.collection("patientData").add(item)
         .then(() => {
           success.numRecords += 1;
