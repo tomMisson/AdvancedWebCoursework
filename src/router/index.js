@@ -22,8 +22,7 @@ const routes = [
     path: "/querydata",
     name: "QueryData",
 
-    component: () =>
-      import( "../views/QueryData.vue"),
+    component: () => import("../views/QueryData.vue"),
   },
   {
     path: "/help",
