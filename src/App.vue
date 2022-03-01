@@ -26,4 +26,8 @@ export default {
 .container:first-of-type {
   margin-top: 30px;
 }
+
+h1{
+  text-align: left;
+}
 </style>
