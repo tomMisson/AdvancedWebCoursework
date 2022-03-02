@@ -26,6 +26,7 @@
       </label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="LEDV"
         placeholder=""
@@ -41,6 +42,7 @@
       </label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="REDV"
         placeholder=""
@@ -56,6 +58,7 @@
       >
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="LESV"
         placeholder=""
@@ -71,6 +74,7 @@
       </label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="RESV"
         placeholder=""
@@ -86,6 +90,7 @@
       >
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="LVEF"
         placeholder=""
@@ -101,6 +106,7 @@
       >
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="RVEF"
         placeholder=""
@@ -115,6 +121,7 @@
       </label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="LVMASS"
         placeholder=""
@@ -129,6 +136,7 @@
       >
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="RVMASS"
         placeholder=""
@@ -141,6 +149,7 @@
       <label for="LSV" class="form-LSV">Left systolic volume (LSV) :</label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="LSV"
         placeholder=""
@@ -153,6 +162,7 @@
       <label for="RSV" class="form-RSV">Right systolic volume (RSV) :</label>
       <input
         type="number"
+        step = "0.0001"
         class="form-control"
         id="RSV"
         placeholder=""
@@ -201,6 +211,7 @@
       <label for="MRI" class="form-MRI">Age at MRI :</label>
       <input
         type="number"
+        step = "0.0000000000000001"
         class="form-control"
         id="MRI"
         placeholder=""
@@ -353,3 +364,4 @@ export default {};
 </script>
 
 <style></style>
+
