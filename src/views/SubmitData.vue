@@ -61,7 +61,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -77,7 +76,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -93,7 +91,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -109,7 +106,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -125,7 +121,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -141,7 +136,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LVMASS">
@@ -156,7 +150,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RVMASS">
@@ -171,7 +164,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LSV">
@@ -184,7 +176,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RSV">
@@ -197,7 +188,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <p></p>
@@ -246,7 +236,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
