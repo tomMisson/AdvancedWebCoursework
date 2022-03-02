@@ -69,6 +69,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "shush" */ "../views/ResetPassword.vue"),
   },
+     {
+        path: "/editdata",
+        name: "EditData",
+        component: () =>
+            import ("../views/EditData.vue"),
+    },
   {
     path: "/:catchAll(.*)",
     name: "404",
