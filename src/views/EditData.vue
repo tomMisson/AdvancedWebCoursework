@@ -1,5 +1,5 @@
 <template>
-  <form id="manualdata" v-if="!isProcessing" class="w-auto p-3 was-validated">
+  <form id="manualdata" v-if="!isProcessing" class="w-auto p-3">
     <h2>Update Data</h2>
     <div class="Cardiomyopathytype">
       <select
@@ -14,9 +14,6 @@
         <option value="4">Arrhythmogenic right ventricular dysplasia</option>
         <option value="5">Unclassified cardiomyopathy</option>
       </select>
-      <div id="Cardiomyopathyvalidation" class="invalid-feedback">
-        Please select a valid Cardiomyopathy Type.
-      </div>
       <p></p>
     </div>
 
@@ -32,7 +29,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="REDV">
@@ -47,7 +43,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LESV">
@@ -62,7 +57,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RESV">
@@ -77,7 +71,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LVEF">
@@ -92,7 +85,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RVEF">
@@ -107,7 +99,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LVMASS">
       <label for="LVMASS" class="form-LVMASS"
@@ -121,7 +112,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RVMASS">
       <label for="RVMASS" class="form-RVMASS"
@@ -135,7 +125,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LSV">
       <label for="LSV" class="form-LSV">Left systolic volume (LSV) :</label>
@@ -147,8 +136,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RSV">
       <label for="RSV" class="form-RSV">Right systolic volume (RSV) :</label>
@@ -160,7 +147,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <p></p>
 
@@ -208,7 +194,6 @@
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <p>Apical HCM :</p>
