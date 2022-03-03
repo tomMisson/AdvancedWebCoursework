@@ -327,7 +327,7 @@
     <button class="btn btn-warning" type="submit">Submit data</button>
     <p></p>
   </form>
-  </template>
+</template>
 
 <script>
 export default {};
