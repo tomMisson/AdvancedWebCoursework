@@ -207,9 +207,6 @@
         <option value="2">Female</option>
         <option value="3">Prefer not to say</option>
       </select>
-      <div id="Gendervalidation" class="invalid-feedback">
-        Please select a valid Gender.
-      </div>
     </div>
     <p></p>
 
@@ -223,8 +220,6 @@
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <p>Apical HCM :</p>
