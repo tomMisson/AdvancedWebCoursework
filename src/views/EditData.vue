@@ -1,5 +1,4 @@
-<template>
-  <form id="manualdata" v-if="!isProcessing" class="w-auto p-3 was-validated">
+<form id="manualdata" class="w-auto p-3">
     <h2>Update Data</h2>
     <div class="Cardiomyopathytype">
       <select
@@ -14,9 +13,6 @@
         <option value="4">Arrhythmogenic right ventricular dysplasia</option>
         <option value="5">Unclassified cardiomyopathy</option>
       </select>
-      <div id="Cardiomyopathyvalidation" class="invalid-feedback">
-        Please select a valid Cardiomyopathy Type.
-      </div>
       <p></p>
     </div>
 
@@ -26,13 +22,11 @@
       </label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="LEDV"
-        placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="REDV">
@@ -41,13 +35,12 @@
       </label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="REDV"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LESV">
@@ -56,13 +49,12 @@
       >
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="LESV"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RESV">
@@ -71,13 +63,12 @@
       </label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="RESV"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="LVEF">
@@ -86,13 +77,12 @@
       >
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="LVEF"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="RVEF">
@@ -101,13 +91,12 @@
       >
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="RVEF"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LVMASS">
       <label for="LVMASS" class="form-LVMASS"
@@ -115,13 +104,12 @@
       </label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="LVMASS"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RVMASS">
       <label for="RVMASS" class="form-RVMASS"
@@ -129,38 +117,34 @@
       >
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="RVMASS"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="LSV">
       <label for="LSV" class="form-LSV">Left systolic volume (LSV) :</label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="LSV"
         placeholder=""
         required
       />
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="RSV">
       <label for="RSV" class="form-RSV">Right systolic volume (RSV) :</label>
       <input
         type="number"
-        step = "0.0001"
+        step="0.0001"
         class="form-control"
         id="RSV"
         placeholder=""
         required
       />
-      <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <p></p>
 
@@ -171,6 +155,7 @@
         name="inlineRadioOptions"
         id="Scarring"
         value="option1"
+        required
       />
       <label class="form-check-label" for="Fibrosis">Fibrosis</label>
     </div>
@@ -202,12 +187,13 @@
       <label for="MRI" class="form-MRI">Age at MRI :</label>
       <input
         type="number"
-        step = "0.0000000000000001"
+        step="0.0000000000000001"
         class="form-control"
         id="MRI"
         placeholder=""
         required
       />
+      <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
@@ -343,11 +329,10 @@
     </div>
 
     <p></p>
-    <button class="btn btn-warning" @click="onSubmit">Submit data</button>
-
+    <button class="btn btn-warning" type="submit">Submit data</button>
     <p></p>
   </form>
-</template>
+  </template>
 
 <script>
 export default {};
