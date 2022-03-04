@@ -22,8 +22,7 @@ const routes = [
     path: "/querydata",
     name: "QueryData",
 
-    component: () =>
-      import( "../views/QueryData.vue"),
+    component: () => import("../views/QueryData.vue"),
   },
   {
     path: "/help",
@@ -70,6 +69,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "shush" */ "../views/ResetPassword.vue"),
   },
+     {
+        path: "/editdata",
+        name: "EditData",
+        component: () =>
+            import ("../views/EditData.vue"),
+    },
   {
     path: "/:catchAll(.*)",
     name: "404",

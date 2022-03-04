@@ -3,11 +3,13 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="help">
-          <h1>How can we help you?</h1>
-          <p>
-            Please use the drop down list below to select what you need help
-            with
-          </p>
+          <div class="helptext">
+            <h1>How can we help you?</h1>
+            <p>
+              Please use the drop down list below to select what you need help
+              with
+            </p>
+          </div>
           <select
             v-model="help_item"
             class="form-select my-4"
@@ -117,3 +119,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.helptext {
+  text-align: center;
+}
+</style>
