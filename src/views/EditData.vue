@@ -7,7 +7,7 @@
         aria-label="Cardiomyopathy Type"
         required
       >
-        <option selected disabled value="">Choose Cardiomyopathy Type</option>
+        <option selected disabled value="">{{route.params.id}}</option>
         <option value="1">Dilated cardiomyopathy</option>
         <option value="2">Hypertrophic cardiomyopathy</option>
         <option value="3">Restrictive cardiomyopathy</option>
@@ -350,7 +350,21 @@
 </template>
 
 <script>
-export default {};
+import { useRoute } from "vue-router";
+import { firestore } from "../main";
+
+
+export default {
+   setup() {
+    const route = useRoute(); 
+
+    function getDoc() {
+
+    }
+
+    return { route };
+  },
+};
 </script>
 
 <style></style>

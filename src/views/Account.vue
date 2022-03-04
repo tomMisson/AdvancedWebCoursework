@@ -37,14 +37,14 @@ export default {
       if (e.target.matches("#delete-btn")) {
         deleteDocument(e.target.parentElement);
       } else if (e.target.matches("#edit-btn")) {
-        router.push({ path: "/" });
+        console.log(e.target.parentElement.id);
+        router.push({ path: "/editdata/"+ e.target.parentElement.id +""});
       }
     }
 
     getData();
 
     function getData() {
-      console.log("getdata function hit");
       var userId = firebase.auth().currentUser.uid;
       console.log(userId);
       firestore
