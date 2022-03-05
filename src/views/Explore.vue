@@ -1,6 +1,40 @@
 <template>
   <div class="container">
-    <h1>Explore more</h1>
+    <h1>Explore</h1>
+    <p>
+      On this page you can query our database as well as external databases to
+      learn more about different cardiomyopathy types as well as their
+      associated gene mutations.
+    </p>
+    <h2 class="mt-5">Explore our database</h2>
+    <select
+      name="cmType"
+      class="form-select"
+      autofocus
+      v-model="selectedCMtype"
+      @change="getDetailsFromFirestore"
+    >
+      <option disabled value="" selected>Select a cardiomyopathy type</option>
+      <option v-for="cmType in cmTypes" :value="cmType" :key="cmType">
+        {{ cmType }}
+      </option>
+    </select>
+
+    <template v-if="cmDetails[0]">
+      <div class="card mt-4">
+        <h3 class="card-header">{{ cmDetails[0] }} cardiomyopathy</h3>
+        <div class="card-body">
+          <p class="card-text">{{ cmDetails[1]?.desc }}</p>
+          <p class="card-text">
+            <strong>Associated genes:</strong>
+            <br />
+            {{ cmDetails[1]?.genes.join(", ") }}
+          </p>
+        </div>
+      </div>
+    </template>
+
+    <h2 class="mt-5">Explore externally</h2>
     <p>
       Looking to learn more about a specific mutation or Cardiomyopathy type?
       Simply enter a search term below and click to learn more
@@ -10,7 +44,6 @@
       <select
         class="form-select"
         name="typeSelect"
-        autofocus
         v-model="searchType"
         @change="search"
       >
@@ -113,15 +146,35 @@ import {
   getGeneDetailsFromSearchResult,
   getCardiomyopathyDetailsFromSearchResult,
 } from "../scripts/genesearch";
-import { ref } from "vue";
+
+import {
+  getCMTypes,
+  getDetailsForCMType,
+} from "../scripts/exploredatabaseCMdetails";
+
+import { ref, onMounted } from "vue";
+
 export default {
   setup() {
+    const cmTypes = ref([]);
+    const selectedCMtype = ref("");
+    const cmDetails = ref({});
+
     const searchTerm = ref("");
     const searchType = ref("");
 
     const geneResults = ref([]);
     const cmResults = ref([]);
     const detailsResult = ref({});
+
+    onMounted(async () => {
+      cmTypes.value = await getCMTypes();
+    });
+
+    async function getDetailsFromFirestore() {
+      cmDetails.value = {};
+      cmDetails.value = await getDetailsForCMType(selectedCMtype.value);
+    }
 
     async function search() {
       geneResults.value = [];
@@ -161,10 +214,13 @@ export default {
             "https://hpo.jax.org/app/browse/term/" + detailsResult.value.id;
           break;
       }
-      console.log(detailsResult.value);
     }
 
     return {
+      cmTypes,
+      cmDetails,
+      selectedCMtype,
+      getDetailsFromFirestore,
       searchTerm,
       searchType,
       search,
