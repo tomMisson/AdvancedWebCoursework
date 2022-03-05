@@ -1,24 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-12">
-        <h4>Cardiomyopathy Type</h4>
-        <select class="form-select" id="CMtype" v-model="cmType">
-          <option
-            v-for="type in CMtypes"
-            :value="type"
-            :key="type"
-          >
-            {{ type }}
-          </option>
-        </select>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-4 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene" v-model="geneSelection">
-          <option disabled value="">
-            Select one
-          </option>
+          <option disabled value="">Select one</option>
           <option
             v-for="mutation in mutationTypes"
             :value="mutation"
@@ -28,12 +14,10 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-4 col-sm-12">
         <h4>First dimension</h4>
         <select class="form-select" id="fd" v-model="firstDimension">
-          <option disabled value="">
-            Select one
-          </option>
+          <option disabled value="">Select one</option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -43,12 +27,10 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-4 col-sm-12">
         <h4>Second dimension</h4>
         <select class="form-select" id="sd" v-model="secondDimension">
-          <option disabled value="">
-            None
-          </option>
+          <option value="">None</option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -62,36 +44,61 @@
         Generate
       </button>
       <div v-if="error.error" class="alert alert-danger my-2" role="alert">
-        {{error.errorMessage}}
+        {{ error.errorMessage }}
       </div>
     </div>
     <div class="col">
       <h2 class="text-center mt-3">Graph type</h2>
       <div class="mt-5 text-center">
         <label class="mx-2">
-          <input checked type="radio" class="form-check-input" name="graph" value="bar" v-model="graphType"/>
+          <input
+            checked
+            type="radio"
+            class="form-check-input"
+            name="graph"
+            value="bar"
+            v-model="graphType"
+          />
           Bar
         </label>
         <label class="mx-2">
-          <input type="radio" class="form-check-input" name="graph" value="line" v-model="graphType"/>
+          <input
+            type="radio"
+            class="form-check-input"
+            name="graph"
+            value="line"
+            v-model="graphType"
+          />
           Line
         </label>
         <label class="mx-2">
-          <input type="radio" class="form-check-input" name="graph" value="area" v-model="graphType"/>
+          <input
+            type="radio"
+            class="form-check-input"
+            name="graph"
+            value="area"
+            v-model="graphType"
+          />
           Area
         </label>
         <label class="mx-2">
-          <input type="radio" class="form-check-input" name="graph" value="scatter" v-model="graphType"/>
+          <input
+            type="radio"
+            class="form-check-input"
+            name="graph"
+            value="scatter"
+            v-model="graphType"
+          />
           Scatter
         </label>
       </div>
     </div>
     <div class="row my-5">
       <h2 class="text-center mt-2">Graph</h2>
-      <graph 
-        :type=graphType
-        :series=series
-        :chartOptions=chartOptions
+      <graph
+        :type="graphType"
+        :series="series"
+        :chartOptions="chartOptions"
         class="my-4 text-center"
       />
     </div>
@@ -100,16 +107,20 @@
 
 <script>
 import Graph from "@/components/Graph";
-import { getSelectionsForGraphing, CMtypes, getDataForDimension } from "../scripts/graphing";
-import {ref, onMounted, reactive} from "vue";
+import {
+  getSelectionsForGraphing,
+  CMtypes,
+  getDataForDimension,
+} from "../scripts/graphing";
+import { ref, onMounted, reactive } from "vue";
 
 export default {
-  components: { 
-    Graph
+  components: {
+    Graph,
   },
   setup() {
     const graphType = ref("bar");
-    const dimensions =  ref({});
+    const dimensions = ref({});
     const mutationTypes = ref({});
 
     const cmType = ref("Hypertrophic");
@@ -123,13 +134,13 @@ export default {
     });
 
     const chartOptions = ref({
-        xaxis: {
-          title: {text:""},
-          labels: {
-            show: false
-          },
-          categories: [],
+      xaxis: {
+        title: { text: "" },
+        labels: {
+          show: false,
         },
+        categories: [],
+      },
     });
 
     const series = ref([
@@ -143,61 +154,65 @@ export default {
       dimensions.value = filters.dimensions;
       mutationTypes.value = filters.mutationTypes;
     });
-    
-    async function generateGraph() {
-      error.error = false
 
-      if(firstDimension.value && geneSelection.value)
-      {
-        const colors = ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"];
+    async function generateGraph() {
+      error.error = false;
+
+      if (firstDimension.value && geneSelection.value) {
         chartOptions.value = {
           xaxis: {
             title: {
-              text: geneSelection.value
+              text: geneSelection.value,
             },
             labels: {
-              show: false
+              show: false,
             },
           },
           yaxis: {
             title: {
-              text: firstDimension.value
+              text: firstDimension.value,
             },
-            labels: { 
-              formatter: (value)=>{ return isNaN(value) ? value : Math.round(value * 100) / 100}
-            }
+            labels: {
+              formatter: (value) => {
+                return isNaN(value) ? value : Math.round(value * 100) / 100;
+              },
+            },
           },
-          colors: [colors[Math.floor(Math.random() * colors.length)]],
+          colors: ["#008ffb"],
         };
 
-        console.log( await getDataForDimension(geneSelection.value, firstDimension.value))
+        console.log(
+          await getDataForDimension(geneSelection.value, firstDimension.value)
+        );
 
         series.value = [
           {
-            data: await getDataForDimension(geneSelection.value, firstDimension.value)
+            data: await getDataForDimension(
+              geneSelection.value,
+              firstDimension.value
+            ),
           },
         ];
-      }
-
-      else {
-        error.error = true
-        error.errorMessage = "Unable to generate graph due to invalid criteria selection"
+      } else {
+        error.error = true;
+        error.errorMessage =
+          "Unable to generate graph due to invalid criteria selection";
       }
     }
 
-    return { 
+    return {
       cmType,
       geneSelection,
       firstDimension,
       secondDimension,
-      generateGraph, 
-      dimensions, 
-      mutationTypes, 
-      CMtypes, 
-      graphType, 
-      series, 
-      chartOptions, 
-      error
+      generateGraph,
+      dimensions,
+      mutationTypes,
+      CMtypes,
+      graphType,
+      series,
+      chartOptions,
+      error,
     };
   },
 };

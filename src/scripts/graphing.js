@@ -12,19 +12,24 @@ export async function getSelectionsForGraphing() {
             var data = doc.data();
             Object.keys(data).forEach((key) => {
                 if(key !== "mutatedGenes" && key !== "owner" && key !== "createdAt")
+                {
                     dimensions.indexOf(key) === -1 ? dimensions.push(key) : null;
+                }
                 else if (key === "mutatedGenes"){
                     data[key].forEach(mutation => {
                         mutationTypes.indexOf(mutation) === -1 ? mutationTypes.push(mutation) : null;
                     });
                 }
-            });  
+            });
         });
-        
+
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
+
+    dimensions.sort();
+    mutationTypes.sort();
 
     return {dimensions, mutationTypes}
 }
@@ -33,7 +38,7 @@ export async function getDataForDimension(gene, dimensionName) {
     const dataPoints = [];
 
     if(dimensionName === ""){
-        return dataPoints
+        return dataPoints;
     }
 
     await firestore.collection("patientData")
@@ -41,15 +46,17 @@ export async function getDataForDimension(gene, dimensionName) {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             var data = doc.data();
+            console.log(data);
             if(data[dimensionName] && data.mutatedGenes.includes(gene)){
                 dataPoints.push(data[dimensionName]);
             }
         });
-        
+
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
 
+    console.log(dataPoints);
     return dataPoints
 }
