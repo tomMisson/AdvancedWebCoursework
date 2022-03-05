@@ -37,7 +37,6 @@ export default {
       if (e.target.matches("#delete-btn")) {
         deleteDocument(e.target.parentElement);
       } else if (e.target.matches("#edit-btn")) {
-        console.log(e.target.parentElement.id);
         router.push({ path: "/editdata/"+ e.target.parentElement.id +""});
       }
     }
@@ -46,7 +45,6 @@ export default {
 
     function getData() {
       var userId = firebase.auth().currentUser.uid;
-      console.log(userId);
       firestore
         .collection("patientData")
         .where("owner", "==", userId)
@@ -60,7 +58,6 @@ export default {
       var count = 0;
       querySnapshot.forEach((doc) => {
         count++;
-        console.log(doc.id, " => ", doc.data());
         var htmlToSet = "";
         var card = document.getElementById("userData");
         htmlToSet =
@@ -115,9 +112,7 @@ export default {
         .doc(docCard.id)
         .get()
         .then((doc) => {
-          console.log(doc.data());
           doc.ref.delete();
-          console.log("document deleted");
           document.getElementById(docCard.id).remove();
         });
     }
