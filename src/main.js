@@ -20,6 +20,19 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
+const TEST_MODE = false;
+
+if (TEST_MODE) {
+  firestore.enablePersistence()
+  .catch((err) => {
+      if (err.code == 'failed-precondition') {
+          console.error('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
+      } else if (err.code == 'unimplemented') {
+          console.error("Error: Firebase persistence is not available on this browser");
+      }
+  });
+}
+
 firebase.auth().onAuthStateChanged((user) => {
   store.dispatch("setUser", user);
 });
