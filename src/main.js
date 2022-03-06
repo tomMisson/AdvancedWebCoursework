@@ -19,7 +19,7 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 if (TEST_MODE) {
   firestore.enablePersistence()
