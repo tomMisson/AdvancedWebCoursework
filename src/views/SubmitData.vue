@@ -490,6 +490,8 @@ export default {
         isProcessingManual.value = false;
         return;
       }
+      
+      formModel.geneMutations = Object.keys(formModel.geneMutations).filter(key => myObject[key]);
 
       firestore
         .collection("patientData")
