@@ -491,7 +491,7 @@ export default {
         return;
       }
       
-      formModel.geneMutations = Object.keys(formModel.geneMutations).filter(key => myObject[key]);
+      formModel.geneMutations = Object.keys(formModel.geneMutations).filter(key => formModel.geneMutations[key]);
 
       firestore
         .collection("patientData")
