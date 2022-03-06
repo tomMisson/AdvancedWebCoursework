@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="handleClick">
+  <div class="container">
     <template v-if="user">
       <h1>Welcome back {{ user?.displayName }}</h1>
       <br />
@@ -10,38 +10,83 @@
 
       <h2>Submitted data</h2>
 
-      <div id="userData"></div>
-    </template>
-
-    <template v-else>
-      <div class="alert alert-warning my-3" role="alert">
-        Please sign in to an account to view this page.
+      <div id="userData" @click="handleClick">
+        <div class="card" id="doc.id" v-for="doc in userDocs" :key="doc.id">
+          <div class="card-header" id="doc.id">
+            <h5 class="mb-0">
+              <button
+                class="btn"
+                data-toggle="collapse-"
+                +
+                doc.id
+                data-target="#collapse-"
+                aria-expanded="false"
+                aria-controls="collapse-"
+              >
+                Document ID: documentID
+              </button>
+            </h5>
+          </div>
+          <div
+            id="collapse-"
+            class="collapse"
+            aria-labelledby=""
+            data-parent="#userData"
+          >
+            <div class="card-body">
+              <div id=" " class="d-flex justify-content-center">
+                <button
+                  type="button"
+                  id="edit-btn"
+                  class="btn btn-primary btn-block col-p-3 action"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  id="delete-btn"
+                  class="btn btn-danger btn-block action"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </div>
+
+  <template>
+    <div class="alert alert-warning my-3" role="alert">
+      Please sign in to an account to view this page.
+    </div>
+  </template>
+    
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import router from "../router/index";
 import { firestore, store } from "../main";
 import firebase from "firebase";
 
 export default {
   setup() {
+    const userDocs = ref([]);
+
     let user = computed(function () {
       return store.getters.userData;
     });
+    getData();
 
     function handleClick(e) {
       if (e.target.matches("#delete-btn")) {
         deleteDocument(e.target.parentElement);
       } else if (e.target.matches("#edit-btn")) {
-        router.push({ path: "/editdata/"+ e.target.parentElement.id +""});
+        router.push({ path: "/editdata/" + e.target.parentElement.id + "" });
       }
     }
-
-    getData();
 
     function getData() {
       var userId = firebase.auth().currentUser.uid;
@@ -55,54 +100,55 @@ export default {
     }
 
     function displayData(querySnapshot) {
-      var count = 0;
+      // var count = 0;
       querySnapshot.forEach((doc) => {
-        count++;
-        var htmlToSet = "";
-        var card = document.getElementById("userData");
-        htmlToSet =
-          '<div class="card" id="' +
-          doc.id +
-          '"> <div class="card-header" id="' +
-          '"> <h5 class="mb-0"> <button class="btn" data-toggle="collapse" ' +
-          ' data-target="#collapse-' +
-          count +
-          '" aria-expanded="false" aria-controls="collapse-' +
-          count +
-          '" ' +
-          "> Document ID: " +
-          doc.id +
-          ' </button> </h5> </div> <div id="collapse-' +
-          count +
-          '" ' +
-          ' class="collapse" aria-labelledby="' +
-          count +
-          '" data-parent="#userData" > ' +
-          ' <div class="card-body"> <table class="table table-sm userData"> <thead> ' +
-          ' <tr> <th scope="col">Patient Data</th> <th class="col-md-3" ' +
-          ' scope="col">Value</th> </tr> </thead> <tbody> ';
+        userDocs.value.push(doc);
+        // count++;
+        // var htmlToSet = "";
+        // var card = document.getElementById("userData");
+        // htmlToSet =
+        //   '<div class="card" id="' +
+        //   doc.id +
+        //   '"> <div class="card-header" id="' +
+        //   '"> <h5 class="mb-0"> <button class="btn" data-toggle="collapse" ' +
+        //   ' data-target="#collapse-' +
+        //   count +
+        //   '" aria-expanded="false" aria-controls="collapse-' +
+        //   count +
+        //   '" ' +
+        //   "> Document ID: " +
+        //   doc.id +
+        //   ' </button> </h5> </div> <div id="collapse-' +
+        //   count +
+        //   '" ' +
+        //   ' class="collapse" aria-labelledby="' +
+        //   count +
+        //   '" data-parent="#userData" > ' +
+        //   ' <div class="card-body"> <table class="table table-sm userData"> <thead> ' +
+        //   ' <tr> <th scope="col">Patient Data</th> <th class="col-md-3" ' +
+        //   ' scope="col">Value</th> </tr> </thead> <tbody> ';
 
-        for (const prop in doc.data()) {
-          var tableRow =
-            '<tr> <th scope="row">' +
-            prop +
-            "</th> <td> " +
-            doc.get(prop) +
-            " </td> </tr>";
-          htmlToSet += tableRow;
-        }
+        // for (const prop in doc.data()) {
+        //   var tableRow =
+        //     '<tr> <th scope="row">' +
+        //     prop +
+        //     "</th> <td> " +
+        //     doc.get(prop) +
+        //     " </td> </tr>";
+        //   htmlToSet += tableRow;
+        // }
 
-        htmlToSet +=
-          '</tbody></table> <div id="' +
-          doc.id +
-          '" class="d-flex justify-content-center">' +
-          ' <button type="button" id="edit-btn" class="btn btn-primary btn-block col-p-3 ' +
-          ' action">Edit</button> <button type="button" id="delete-btn" class="btn btn-danger ' +
-          " btn-block action " +
-          doc.id +
-          '">Delete</button> </div> </div> </div> </div> ';
+        // htmlToSet +=
+        //   '</tbody></table> <div id="' +
+        //   doc.id +
+        //   '" class="d-flex justify-content-center">' +
+        //   ' <button type="button" id="edit-btn" class="btn btn-primary btn-block col-p-3 ' +
+        //   ' action">Edit</button> <button type="button" id="delete-btn" class="btn btn-danger ' +
+        //   " btn-block action " +
+        //   doc.id +
+        //   '">Delete</button> </div> </div> </div> </div> ';
 
-        card.innerHTML += htmlToSet;
+        // card.innerHTML += htmlToSet;
       });
     }
 
@@ -121,13 +167,7 @@ export default {
       router.push({ path: "/" });
     }
 
-    return { user, notLoggedInRedirect, getData, deleteDocument, handleClick };
+    return { user, notLoggedInRedirect, getData, deleteDocument, handleClick, userDocs };
   },
 };
 </script>
-
-<style>
-.card .action {
-  margin: 0.2%;
-}
-</style>
