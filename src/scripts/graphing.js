@@ -1,5 +1,4 @@
 import {firestore} from "../main"
-export const CMtypes = ["Hypertrophic","Dilated","Restrictive"];
 
 export async function getSelectionsForGraphing() {
     const dimensions = [];
@@ -36,6 +35,8 @@ export async function getSelectionsForGraphing() {
 
 export async function getDataForDimension(gene, dimensionName) {
     const dataPoints = [];
+    let dataType = "";
+    let occurrences = {};
 
     if(dimensionName === ""){
         return dataPoints;
@@ -46,8 +47,7 @@ export async function getDataForDimension(gene, dimensionName) {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             var data = doc.data();
-            console.log(data);
-            if(data[dimensionName] && data.mutatedGenes.includes(gene)){
+            if(typeof data[dimensionName] !== 'undefined' && data.mutatedGenes.includes(gene)){
                 dataPoints.push(data[dimensionName]);
             }
         });
@@ -57,6 +57,16 @@ export async function getDataForDimension(gene, dimensionName) {
         console.log("Error getting documents: ", error);
     });
 
-    console.log(dataPoints);
-    return dataPoints
+    if(typeof dataPoints[0] === 'number')
+        dataType = "numeric";
+    else if(typeof dataPoints[0] === 'string' || typeof dataPoints[0] === 'boolean')
+    {
+        dataType = "category";
+        occurrences = dataPoints.reduce(function (acc, curr) {
+            return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+        }, {});
+    }
+
+
+    return {dataPoints, dataType, occurrences};
 }

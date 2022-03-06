@@ -109,7 +109,6 @@
 import Graph from "@/components/Graph";
 import {
   getSelectionsForGraphing,
-  CMtypes,
   getDataForDimension,
 } from "../scripts/graphing";
 import { ref, onMounted, reactive } from "vue";
@@ -133,21 +132,34 @@ export default {
       errorMessage: "",
     });
 
-    const chartOptions = ref({
+    const chartOptions = ref({});
+    const series = ref([]);
+
+    let baseChartOptions = {
+      title: {
+        text: "",
+        align: "left",
+      },
       xaxis: {
-        title: { text: "" },
+        title: {
+          text: "",
+        },
         labels: {
           show: false,
         },
-        categories: [],
       },
-    });
-
-    const series = ref([
-      {
-        data: [],
+      yaxis: {
+        title: {
+          text: "",
+        },
+        labels: {
+          formatter: (value) => {
+            return isNaN(value) ? value : Math.round(value * 100) / 100;
+          },
+        },
       },
-    ]);
+      colors: ["#008ffb"],
+    };
 
     onMounted(async () => {
       const filters = await getSelectionsForGraphing();
@@ -159,40 +171,31 @@ export default {
       error.error = false;
 
       if (firstDimension.value && geneSelection.value) {
-        chartOptions.value = {
-          xaxis: {
-            title: {
-              text: geneSelection.value,
-            },
-            labels: {
-              show: false,
-            },
-          },
-          yaxis: {
-            title: {
-              text: firstDimension.value,
-            },
-            labels: {
-              formatter: (value) => {
-                return isNaN(value) ? value : Math.round(value * 100) / 100;
-              },
-            },
-          },
-          colors: ["#008ffb"],
-        };
+        try {
+          var resultsObj = await getDataForDimension(
+            geneSelection.value,
+            firstDimension.value
+          );
 
-        console.log(
-          await getDataForDimension(geneSelection.value, firstDimension.value)
-        );
+          baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value}`;
+          baseChartOptions.xaxis.title.text = firstDimension.value;
+          baseChartOptions.yaxis.title.text = geneSelection.value;
 
-        series.value = [
-          {
-            data: await getDataForDimension(
-              geneSelection.value,
-              firstDimension.value
-            ),
-          },
-        ];
+          chartOptions.value = baseChartOptions;
+
+          console.log(
+            await getDataForDimension(geneSelection.value, firstDimension.value)
+          );
+
+          series.value = [
+            {
+              data: resultsObj.occurrences,
+            },
+          ];
+        } catch (err) {
+          error.error = true;
+          error.errorMessage = err;
+        }
       } else {
         error.error = true;
         error.errorMessage =
@@ -208,7 +211,6 @@ export default {
       generateGraph,
       dimensions,
       mutationTypes,
-      CMtypes,
       graphType,
       series,
       chartOptions,
