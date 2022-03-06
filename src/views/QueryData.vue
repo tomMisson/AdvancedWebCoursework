@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="col-lg-6 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene" v-model="geneSelection">
           <option disabled value="">Select one</option>
@@ -14,23 +14,10 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="col-lg-6 col-md-6 col-sm-12">
         <h4>First dimension</h4>
         <select class="form-select" id="fd" v-model="firstDimension">
           <option disabled value="">Select one</option>
-          <option
-            v-for="dimension in dimensions"
-            :value="dimension"
-            :key="dimension"
-          >
-            {{ dimension }}
-          </option>
-        </select>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
-        <h4>Second dimension</h4>
-        <select class="form-select" id="sd" v-model="secondDimension">
-          <option value="">None</option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -125,7 +112,6 @@ export default {
     const cmType = ref("Hypertrophic");
     const geneSelection = ref("");
     const firstDimension = ref("");
-    const secondDimension = ref("");
 
     const error = reactive({
       error: false,
@@ -192,7 +178,7 @@ export default {
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
             baseChartOptions.yaxis.title.text = geneSelection.value;
-            baseChartOptions.xaxis.title.text = firstDimension.value ;
+            baseChartOptions.xaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
           }
 
@@ -223,7 +209,6 @@ export default {
       cmType,
       geneSelection,
       firstDimension,
-      secondDimension,
       generateGraph,
       dimensions,
       mutationTypes,

@@ -67,6 +67,5 @@ export async function getDataForDimension(gene, dimensionName) {
         }, {});
     }
 
-    console.log({dataPoints, dataType, occurrences})
     return {dataPoints, dataType, occurrences};
 }
