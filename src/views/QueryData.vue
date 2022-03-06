@@ -135,40 +135,48 @@ export default {
     const chartOptions = ref({});
     const series = ref([]);
 
-    let baseChartOptions = {
-      title: {
-        text: "",
-        align: "left",
-      },
-      xaxis: {
-        title: {
-          text: "",
-        },
-        labels: {
-          show: false,
-        },
-      },
-      yaxis: {
-        title: {
-          text: "",
-        },
-        labels: {
-          formatter: (value) => {
-            return isNaN(value) ? value : Math.round(value * 100) / 100;
-          },
-        },
-      },
-      colors: ["#008ffb"],
-    };
-
     onMounted(async () => {
       const filters = await getSelectionsForGraphing();
       dimensions.value = filters.dimensions;
       mutationTypes.value = filters.mutationTypes;
     });
 
+    function convertOccourancesToDataPoints(occourances) {
+      return Object.keys(occourances).map((key) => {
+        return {
+          x: key,
+          y: occourances[key],
+        };
+      });
+    }
+
     async function generateGraph() {
       error.error = false;
+      let baseChartOptions = {
+        title: {
+          text: "",
+          align: "left",
+        },
+        xaxis: {
+          title: {
+            text: "",
+          },
+          labels: {
+            show: false,
+          },
+        },
+        yaxis: {
+          title: {
+            text: "",
+          },
+          labels: {
+            formatter: (value) => {
+              return isNaN(value) ? value : Math.round(value * 100) / 100;
+            },
+          },
+        },
+        colors: ["#008ffb"],
+      };
 
       if (firstDimension.value && geneSelection.value) {
         try {
@@ -178,18 +186,26 @@ export default {
           );
 
           baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value}`;
-          baseChartOptions.xaxis.title.text = firstDimension.value;
-          baseChartOptions.yaxis.title.text = geneSelection.value;
+
+          if (resultsObj.dataType === "numeric") {
+            baseChartOptions.yaxis.title.text = firstDimension.value;
+            baseChartOptions.xaxis.title.text = geneSelection.value;
+          } else {
+            baseChartOptions.yaxis.title.text = geneSelection.value;
+            baseChartOptions.xaxis.title.text = firstDimension.value ;
+            baseChartOptions.xaxis.labels.show = true;
+          }
 
           chartOptions.value = baseChartOptions;
 
-          console.log(
-            await getDataForDimension(geneSelection.value, firstDimension.value)
-          );
+          const chartData =
+            resultsObj.dataType === "numeric"
+              ? resultsObj.dataPoints
+              : convertOccourancesToDataPoints(resultsObj.occurrences);
 
           series.value = [
             {
-              data: resultsObj.occurrences,
+              data: chartData,
             },
           ];
         } catch (err) {
