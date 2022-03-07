@@ -37,9 +37,7 @@ export default {
       return store.getters.userData;
     });
     getData();
-
-    console.log("User: "+ firebase.auth().currentUser.uid)
-
+    
     function handleClick(e) {
       if (e.target.matches("#delete-btn")) {
         deleteDocument(e.target.parentElement);
