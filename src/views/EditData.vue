@@ -6,7 +6,7 @@
         class="Cardiomyopathy-select"
         aria-label="Cardiomyopathy Type"
         required
-        v-model="cardioType"
+        v-model="formFieldData.cardioType"
       >
         <option selected disabled value="">Choose Cardiomyopathy Type</option>
         <option value="Dilated cardiomyopathy">Dilated cardiomyopathy</option>
@@ -39,7 +39,7 @@
         id="LEDV"
         placeholder=""
         required
-        v-model="ledv"
+        v-model="formFieldData.ledv"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -55,7 +55,7 @@
         id="REDV"
         placeholder=""
         required
-        v-model="redv"
+        v-model="formFieldData.redv"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -71,7 +71,7 @@
         id="LESV"
         placeholder=""
         required
-        v-model="lesv"
+        v-model="formFieldData.lesv"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -87,7 +87,7 @@
         id="RESV"
         placeholder=""
         required
-        v-model="resv"
+        v-model="formFieldData.resv"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -103,7 +103,7 @@
         id="LVEF"
         placeholder=""
         required
-        v-model="lvef"
+        v-model="formFieldData.lvef"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -119,7 +119,7 @@
         id="RVEF"
         placeholder=""
         required
-        v-model="rvef"
+        v-model="formFieldData.rvef"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -134,7 +134,7 @@
         id="LVMASS"
         placeholder=""
         required
-        v-model="lvMass"
+        v-model="formFieldData.lvMass"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -149,7 +149,7 @@
         id="RVMASS"
         placeholder=""
         required
-        v-model="RvMass"
+        v-model="formFieldData.RvMass"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -162,7 +162,7 @@
         id="LSV"
         placeholder=""
         required
-        v-model="lsv"
+        v-model="formFieldData.lsv"
       />
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
@@ -176,7 +176,7 @@
         id="RSV"
         placeholder=""
         required
-        v-model="rsv"
+        v-model="formFieldData.rsv"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -189,7 +189,7 @@
         name="inlineRadioOptions"
         id="Scarring"
         value="Fibrosis"
-        v-model="fibrosis"
+        v-model="formFieldData.fibrosis"
       />
       <label class="form-check-label" for="Fibrosis">Fibrosis</label>
     </div>
@@ -200,7 +200,7 @@
         name="inlineRadioOptions"
         id="Scarring"
         value="Scarring"
-        v-model="scarring"
+        v-model="formFieldData.scarring"
       />
       <label class="form-check-label" for="Scarring">Scarring</label>
     </div>
@@ -210,12 +210,11 @@
         class="form-select"
         aria-label="Gender option"
         required
-        v-model="gender"
+        v-model="formFieldData.gender"
       >
         <option selected disabled value="">Select Your Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
-        <option value="Prefer not to say">Prefer not to say</option>
       </select>
       <div id="Gendervalidation" class="invalid-feedback">
         Please select a valid Gender.
@@ -232,7 +231,7 @@
         id="MRI"
         placeholder=""
         required
-        v-model="mriAge"
+        v-model="formFieldData.mriAge"
       />
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
@@ -245,7 +244,7 @@
         name="HCM"
         id="Yes"
         value="Yes"
-        v-model="apicalHCM"
+        v-model="formFieldData.apicalHCM"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -256,7 +255,7 @@
         name="HCM"
         id="No"
         value="No"
-        v-model="apicalHCM"
+        v-model="formFieldData.apicalHCM"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -269,7 +268,7 @@
         name="SCD"
         id="Yes"
         value="Yes"
-        v-model="suddenCardiacDeath"
+        v-model="formFieldData.suddenCardiacDeath"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -280,7 +279,7 @@
         name="SCD"
         id="No"
         value="No"
-        v-model="suddenCardiacDeath"
+        v-model="formFieldData.suddenCardiacDeath"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -293,7 +292,7 @@
         name="Hypertension"
         id="Yes"
         value="Yes"
-        v-model="hypertension"
+        v-model="formFieldData.hypertension"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -304,7 +303,7 @@
         name="Hypertension"
         id="No"
         value="No"
-        v-model="hypertension"
+        v-model="formFieldData.hypertension"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -317,7 +316,7 @@
         name="Diabetes"
         id="Yes"
         value="Yes"
-        v-model="diabetes"
+        v-model="formFieldData.diabetes"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -329,7 +328,7 @@
         id="No"
         value="No"
         checked
-        v-model="diabetes"
+        v-model="formFieldData.diabetes"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -342,7 +341,7 @@
         name="Myectomy"
         id="Yes"
         value="Yes"
-        v-model="myectomy"
+        v-model="formFieldData.myectomy"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -353,7 +352,7 @@
         name="Myectomy"
         id="No"
         value="No"
-        v-model="myectomy"
+        v-model="formFieldData.myectomy"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -455,7 +454,7 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { ref } from "vue";
+import { reactive } from "vue";
 import { firestore } from "../main";
 
 export default {
@@ -467,91 +466,69 @@ export default {
   setup() {
     const route = useRoute();
 
-    const cardioType = ref("");
-    const ledv = ref("");
-    const redv = ref("");
-    const lesv = ref("");
-    const resv = ref("");
-    const lvef = ref("");
-    const rvef = ref("");
-    const lvMass = ref("");
-    const RvMass = ref("");
-    const lsv = ref("");
-    const rsv = ref("");
-    const fibrosis = ref(false);
-    const scarring = ref(false);
-    const gender = ref("");
-    const mriAge = ref("");
-    const apicalHCM = ref("");
-    const suddenCardiacDeath = ref("");
-    const hypertension = ref("");
-    const diabetes = ref("");
-    const myectomy = ref("");
-    const hcmGeneMutations = [];
+    const formFieldData = reactive({
+      cardioType: "",
+      ledv: "",
+      redv: "",
+      lesv: "",
+      resv: "",
+      lvef: "",
+      rvef: "",
+      lvMass: "",
+      RvMass: "",
+      lsv: "",
+      rsv: "",
+      fibrosis: "",
+      scarring: "",
+      gender: "",
+      mriAge: "",
+      apicalHCM: "",
+      suddenCardiacDeath: "",
+      hypertension: "",
+      diabetes: "",
+      myectomy: "",
+      hcmGeneMutations: "",
+    });
 
     function handleChange(e) {
       const { value, checked } = e.target;
       if (checked) {
-        hcmGeneMutations.push(value);
+        formFieldData.hcmGeneMutations.push(value);
       } else {
-        const index = hcmGeneMutations.findIndex((id) => id === value);
+        const index = formFieldData.hcmGeneMutations.findIndex((id) => id === value);
         if (index > -1) {
-          hcmGeneMutations.splice(index, 1);
+          formFieldData.hcmGeneMutations.splice(index, 1);
         }
       }
     }
 
     function updateData() {
-      firestore
-        .collection("/patientData")
-        .doc(route.params.id)
-        .update({
-          ageAtMRI: mriAge.value,
-          apicalHCM: apicalHCM.value,
-          diabetes: diabetes.value,
-          gender: gender.value,
-          hypertension: hypertension.value,
-          ledv: ledv.value,
-          lesv: lesv.value,
-          lsv: lsv.value,
-          lvef: lvef.value,
-          lvmass: lvMass.value,
-          mutatatedGenes: hcmGeneMutations,
-          myectomy: myectomy.value,
-          redv: redv.value,
-          resv: resv.value,
-          rsv: rsv.value,
-          rvef: rvef.value,
-          scar: scarring.value,
-          suddenCardiacDeath: suddenCardiacDeath.value,
-        })
+      firestore.collection("/patientData").doc(route.params.id).update({
+        ageAtMRI: formFieldData.mriAge,
+        apicalHCM: formFieldData.apicalHCM,
+        diabetes: formFieldData.diabetes,
+        gender: formFieldData.gender,
+        hypertension: formFieldData.hypertension,
+        ledv: formFieldData.ledv,
+        lesv: formFieldData.lesv,
+        lsv: formFieldData.lsv,
+        lvef: formFieldData.lvef,
+        lvmass: formFieldData.lvMass,
+        mutatatedGenes: formFieldData.hcmGeneMutations,
+        myectomy: formFieldData.myectomy,
+        redv: formFieldData.redv,
+        resv: formFieldData.resv,
+        rsv: formFieldData.rsv,
+        rvef: formFieldData.rvef,
+        scar: formFieldData.scarring,
+        suddenCardiacDeath: formFieldData.suddenCardiacDeath,
+      });
     }
 
     return {
-      route,
-      cardioType,
-      ledv,
-      redv,
-      lesv,
-      resv,
-      lvef,
-      rvef,
-      lvMass,
-      RvMass,
-      lsv,
-      rsv,
-      fibrosis,
-      scarring,
-      gender,
-      mriAge,
-      apicalHCM,
-      suddenCardiacDeath,
-      hypertension,
-      diabetes,
-      myectomy,
-      hcmGeneMutations,
+      formFieldData,
       handleChange,
-      updateData,
+      updateData
     };
   },
 };
