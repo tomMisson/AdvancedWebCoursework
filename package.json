@@ -6,13 +6,11 @@
     "serve": "vue-cli-service serve",
     "test": "echo testing not set up",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "echo deployment not set up"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
     "core-js": "^3.6.5",
-    "element-plus": "^2.0.1",
     "firebase": "^8.10.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",

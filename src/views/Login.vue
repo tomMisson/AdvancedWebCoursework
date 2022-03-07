@@ -1,9 +1,10 @@
 <template>
-  <h1>Login</h1>
-  <div>
-    <el-form :model="form" @submit.prevent="submit">
-      <el-form-item label="Email">
-        <el-input
+  <div class="container">
+    <h1>Login</h1>
+    <form :model="form" @submit.prevent="submit">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
           id="email"
           type="email"
           class="form-control"
@@ -13,9 +14,8 @@
           autofocus
           v-model="form.email"
         />
-      </el-form-item>
-      <el-form-item label="Password">
-        <el-input
+        <label for="password">Password</label>
+        <input
           id="password"
           type="password"
           class="form-control"
@@ -23,16 +23,15 @@
           required
           v-model="form.password"
         />
-      </el-form-item>
-      <div>
-        <div>
-          <el-button type="primary" @click="submit">Login</el-button>
-        </div>
       </div>
-    </el-form>
+      <button class="btn btn-primary" type="button" @click="submit">Login</button>
+    </form>
     <div class="login">
-     <p> Forgot your Password ?
-     <router-link to="/resetpassword">Rest Password</router-link> </p>
+     <p>Forgot your Password? 
+     <router-link to="/resetpassword">Reset Password</router-link> </p>
+    </div>
+    <div v-if="error.error" class="alert alert-warning" role="alert">
+      {{error.errorMessage}}
     </div>
   </div>
 </template>
@@ -40,9 +39,15 @@
 <script>
 import firebase from "firebase";
 import {reactive} from "vue";
+import router from '../router/index';
 
 export default {
   setup() {
+    const error = reactive({
+      error: false,
+      errorMessage: "",
+    });
+
     const form = reactive({
       email: '',
       password: ''
@@ -52,22 +57,19 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(form.email, form.password)
-        .then(() => {
-          //some stuff for after login
-        })
         .catch((err) => {
-          console.log("error: " + err);
+          error.error = true
+          error.errorMessage = err
         });
-        const user = firebase.auth().currentUser;
 
-        if(user){
-            console.log("logged in");
-        }else{
-            console.log("not logged in")
-        }
+      const user = firebase.auth().currentUser;
+      
+      if (user){
+        router.push({ path: '/account' })
+      }
     }
   
-  return {form, submit};
+  return {form, submit, error};
   },
 };
 </script>

@@ -1,31 +1,50 @@
 <template>
-  <div class="emailcontainer">
+  <div class="container">
     <h2>Forgotten Password?</h2>
+    <div class="row">
       <input type = "text" class = "textbox" placeholder="Email" v-model="email"/>
-      <input @click="isShowing = true" value="Send">
-      <h1 v-show="isShowing"> Email has been sent to you, Please check your emails and verfity. </h1>  
-    <p> Need an account ? </p>
+      <button class="btn btn-primary" @click="resetPassword">Send </button>
+    </div>
+    
+    <router-link to="/register"> Need an account ?</router-link>
+    
+    <div v-if="error.error" class="alert alert-warning" role="alert">
+      {{error.errorMessage}}
+    </div>
+
+    <div v-if="success" class="alert alert-success" role="alert">
+      Email has been sent to you, please check your emails and verify.
+    </div>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue';
-import { useRoute } from "vue-router";
+import {ref, reactive} from 'vue';
 import firebase from 'firebase';
+
 export default {
-  setup() 
-  {
+  setup() {
+    const error = reactive({
+      error: false,
+      errorMessage: "",
+    });
     const email = ref("");
-    const route = useRoute(); 
+    const success= ref(false); 
 
     function resetPassword(){
       firebase
-        .auth()
-        .sendPasswordResetEmail(email.value)
-        .catch(err =>alert(err.message));
+      .auth()
+      .sendPasswordResetEmail(email.value)
+      .then(() => {
+        success.value = true;
+      })
+      .catch((err) => {
+        error.error = true
+        error.errorMessage = err
+      });
     }
 
-    return { route, email, resetPassword };
+    return { email, resetPassword, error, success};
   },
   data() {
     return {
@@ -34,27 +53,3 @@ export default {
   }
 }
 </script>
-
-<style>
-h2{
-  margin-top: 50px;
-  font-size: 30px;
-}
-.textbox{
-  width: 100%;
-  height:40px;
-  font-size:14pt;
-}
-.li{
-  margin-top: 20px;
-  font-size:14pt;
-}
-div.emailcontainer{
-  background-color: lightgrey;
-  width: 280px;
-  border: 15px solid white;
-  padding: 80px;
-  margin: auto;
-  height: 500px;
-}
-</style>

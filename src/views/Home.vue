@@ -1,50 +1,45 @@
 <template>
-  <div class="home">
-    <div class="cardiomessage">
-      <Hero msg="cardio" />
+  <div class="container">
+    <div class="hero">
+      <h1>Cardiomyopathy Data Sharing Platform</h1>
+      <p>
+        Cardiomyopathy is a disease of the heart muscle that makes it harder for
+        your heart to pump blood to the rest of your body. This platform allows
+        the user to submit and keep track of their own data once they’ve
+        registered to the website. The user can then view useful information
+        relating to cardiomyopathies in varius ways such as graphs and plots for
+        easier consumption and interpretation.
+      </p>
     </div>
-    <img class="heart" alt="Cardiac" src="../assets/CardianTransparent2.png" />
+    <img class="heart" alt="Cardiac" src="../../public/assets/CardianTransparent2.png" />
     <img
       class="heartsmall"
       alt="Cardiac"
-      src="../assets/CardianTransparent2.png"
+      src="../../public/assets/CardianTransparent2.png"
     />
   </div>
-  <div class="container cards_display">
-    <CardsList :articles="articles" />
-    <!-- <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  </div>
+  <CardsList :articles="articles" />
 </template>
 
 <script>
-// @ is an alias to /src
-import Hero from "@/components/Hero.vue";
 import CardsList from "@/components/Cards/CardsList.vue";
 import { getArticles } from "../api/newsFeedApi";
+import { ref, onMounted } from "vue";
 
 export default {
   name: "Home",
   components: {
-    Hero,
     CardsList,
   },
-  data() {
-    return {
-      loading: false,
-      articles: [],
-    };
-  },
-  created() {
-    this.getDataFromApi();
-  },
-  methods: {
-    async getDataFromApi() {
-      this.loading = true;
-      this.articles = await getArticles();
-      this.loading = false;
-    },
-  },
+  setup(){
+    const articles = ref([]);
+
+    onMounted(async() => {
+      articles.value = await getArticles();
+    })
+
+    return {articles}
+  }
 };
 </script>
 
@@ -75,16 +70,5 @@ export default {
   position: fixed;
   align-items: center;
   justify-content: center;
-}
-
-.cards_display {
-  position: absolute;
-
-  bottom: 0px;
-  /* left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
-  width: 100px; */
 }
 </style>

@@ -1,12 +1,14 @@
 import Vuex from "vuex";
 
+const initialState = {
+  user: {
+    loggedIn: false,
+    data: null
+  }
+};
+
 export default new Vuex.Store({
-  state: {
-    user: {
-      loggedIn: false,
-      data: null
-    }
-  },
+  state: initialState,
   getters: {
     user(state){
       return state.user
@@ -31,6 +33,6 @@ export default new Vuex.Store({
       } else {
         commit("SET_USER", null);
       }
-    }
+    },
   }
 });

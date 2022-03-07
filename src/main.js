@@ -1,6 +1,4 @@
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
 import App from './App.vue'
 import router from './router'
 import firebase from "firebase";
@@ -20,15 +18,16 @@ const firebaseConfig = {
 const app = createApp(App);
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
+  router.push({path: "/account"})
 });
 
-app.use(router);
-app.use(store);
-app.use(ElementPlus);
-app.use(Vuex);
-app.mount('#app');
+app.use(router)
+.use(store)
+.use(Vuex)
+.mount('#app');
 
-export {firestore}
+export {firestore, auth}
