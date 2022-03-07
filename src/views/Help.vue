@@ -3,13 +3,11 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="help">
-          <div class="helptext">
-            <h1>How can we help you?</h1>
-            <p>
-              Please use the drop down list below to select what you need help
-              with
-            </p>
-          </div>
+          <h1>How can we help you?</h1>
+          <p>
+            Please use the drop down list below to select what you need help
+            with
+          </p>
           <select
             v-model="help_item"
             class="form-select my-4"
@@ -22,9 +20,13 @@
             <option value="2">How to Login</option>
             <option value="3">How to view account</option>
             <option value="4">How to submit data</option>
-            <option value="5">How to delete data</option>
-            <option value="6">How to query data</option>
-            <option value="7">How to view Gene Details</option>
+            <option value="5">
+              How to view, edit and delete the user submitted data
+            </option>
+            <option value="6">
+              How to search cardiomyopathy types internally and externally
+            </option>
+            <option value="7">How to query data</option>
           </select>
 
           <div class="gif_display my-4">
@@ -75,26 +77,26 @@ export default {
         {
           id: "1",
           title:
-            'Please navigate to the "Register" tab on the top right and fill in the fields, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+            'Please navigate to the "Login" tab on the top right and then click register, fill in the fields, a video demonstration is shown below:',
+          src: "https://streamable.com/e/7dasfd",
         },
         {
           id: "2",
           title:
             'Please navigate to the "Login" tab on the top right and fill in the fields, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+          src: "https://streamable.com/e/yp3fxw",
         },
         {
           id: "3",
           title:
-            'Please navigate to the "Account" tab while hovering over the "Home" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+            'Please navigate to the "Account" tab after you have logged in, a video demonstration is shown below:',
+          src: "https://streamable.com/e/p1d01b",
         },
         {
           id: "4",
           title:
             'Please navigate to the "Submit Data" tab while hovering over the "Home" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+          src: "https://streamable.com/e/qasr1w",
         },
         {
           id: "5",
@@ -105,23 +107,17 @@ export default {
         {
           id: "6",
           title:
-            'Please navigate to the "???" tab while hovering over the "Home" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+            'Please navigate to the "Explore" tab, a video demonstration is shown below:',
+          src: "https://streamable.com/e/chnz8r",
         },
         {
           id: "7",
           title:
-            'Please navigate to the "Gene Details" tab while hovering over the "Home" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+            'Please navigate to the "Query Data" tab, a video demonstration is shown below:',
+          src: "https://streamable.com/e/jty66w",
         },
       ],
     };
   },
 };
 </script>
-
-<style scoped>
-.helptext {
-  text-align: center;
-}
-</style>
