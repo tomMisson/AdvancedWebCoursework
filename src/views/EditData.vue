@@ -1,33 +1,6 @@
 <template>
   <form id="manualdata" class="w-auto p-3 was-validated">
     <h2>Update Data</h2>
-    <div class="Cardiomyopathytype">
-      <select
-        class="Cardiomyopathy-select"
-        aria-label="Cardiomyopathy Type"
-        required
-        v-model="formFieldData.cardioType"
-      >
-        <option selected disabled value="">Choose Cardiomyopathy Type</option>
-        <option value="Dilated cardiomyopathy">Dilated cardiomyopathy</option>
-        <option value="Hypertrophic cardiomyopathy">
-          Hypertrophic cardiomyopathy
-        </option>
-        <option value="Restrictive cardiomyopathy">
-          Restrictive cardiomyopathy
-        </option>
-        <option value="Arrhythmogenic right ventricular dysplasia">
-          Arrhythmogenic right ventricular dysplasia
-        </option>
-        <option value="Unclassified cardiomyopathy">
-          Unclassified cardiomyopathy
-        </option>
-      </select>
-      <div id="Cardiomyopathyvalidation" class="invalid-feedback">
-        Please select a valid Cardiomyopathy Type.
-      </div>
-      <p></p>
-    </div>
     <div class="LEDV">
       <label for="LEDV" class="form-LEDV"
         >Left ventricular end diastolic volume (LEDV):
@@ -467,7 +440,6 @@ export default {
     const route = useRoute();
 
     const formFieldData = reactive({
-      cardioType: "",
       ledv: "",
       redv: "",
       lesv: "",
@@ -534,5 +506,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.card .action {
+  margin: 0.2%;
+}
+</style>
 
