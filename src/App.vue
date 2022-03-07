@@ -1,31 +1,33 @@
 <template>
-  <Navbar :isLoggedIn="isLoggedIn"/>
+  <Navbar :isLoggedIn="isLoggedIn" />
   <router-view />
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
-import {computed} from "vue";
-import {useStore} from "vuex";
+import Navbar from "./components/Navbar.vue";
+import { computed } from "vue";
+import { store } from "./main";
 
 export default {
   setup() {
-    const store = useStore();
-
     let isLoggedIn = computed(function () {
-      return store.state.user.loggedIn
+      return store.getters.isLoggedIn;
     });
-    
-    return {isLoggedIn}
+
+    return { isLoggedIn };
   },
   components: {
-    Navbar
-  }
-}
+    Navbar,
+  },
+};
 </script>
 
 <style>
-  .container:first-of-type {
-    margin-top: 30px;
-  }
+.container:first-of-type {
+  margin-top: 30px;
+}
+
+h1 {
+  text-align: left;
+}
 </style>

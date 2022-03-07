@@ -1,4 +1,15 @@
 import Vuex from "vuex";
+import { firestore } from "./main";
+
+const initialState = {
+  user: {
+    loggedIn: false,
+    data: {
+      displayName: "",
+      email: "",
+    }
+  }
+};
 
 const initialState = {
   user: {
@@ -12,6 +23,12 @@ export default new Vuex.Store({
   getters: {
     user(state){
       return state.user
+    },
+    userData(state){
+      return state.user.data
+    },
+    isLoggedIn(state){
+      return state.user.loggedIn
     }
   },
   mutations: {
@@ -23,12 +40,22 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    fetchUser({ commit }, user) {
+    setUser({ commit }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
-        commit("SET_USER", {
-          displayName: user.displayName,
-          email: user.email
+        firestore.collection("users").doc(user.uid).get()
+        .then(snapshot => {
+          return snapshot.data();
+        })
+        .then((userDataFromDb) => {
+          commit("SET_USER", {
+            displayName: user.displayName,
+            email: user.email,
+            ...userDataFromDb
+          })
+          .catch(err => {
+            console.error("Error getting documents", err);
+          })
         });
       } else {
         commit("SET_USER", null);

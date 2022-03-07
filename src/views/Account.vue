@@ -1,36 +1,46 @@
 <template>
-  <template v-if="user">
-    <h1> Welcome back {{ user?.displayName }}</h1>
-    <br/>
-    <h2>  Email address : {{ user?.email }}</h2>
-    <h2> Account Type : { { accountype } }</h2>
-    <h2> Phone number : { { phonenumber } }</h2>
-    <h2> Address : { { user-adress } }</h2>
-  </template>
+  <div class="container">
+    <template v-if="user">
+      <h1>Welcome back {{ user?.displayName }}</h1>
+      <br />
+      <p>Email address: {{ user?.email }}</p>
+      <p>Account Type: {{ user?.accountType }}</p>
+      <p>Phone number: {{ user?.phonenumber }}</p>
+      <p>Address: {{ user?.address }}</p>
 
-  <template v-else>
-    {{notLoggedInRedirect()}}
-  </template>
+      <h2>Submitted data</h2>
+
+      <table>
+        <thead></thead>
+
+        <tbody></tbody>
+      </table>
+    </template>
+
+    <template v-else>
+      <div class="alert alert-warning my-3" role="alert">
+        Please sign in to an account to view this page.
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
-import {computed} from "vue";
-import {useStore} from "vuex";
+import { computed } from "vue";
 import router from "../router/index";
+import { store } from "../main";
 
 export default {
   setup() {
-    const store = useStore();
-
     let user = computed(function () {
-      return store.state.user?.data
+      return store.getters.userData;
     });
 
-    function notLoggedInRedirect(){
-      router.push({path: "/"})
+    function notLoggedInRedirect() {
+      router.push({ path: "/" });
     }
 
-    return {user, notLoggedInRedirect};
-  }
-}
+    return { user, notLoggedInRedirect };
+  },
+};
 </script>

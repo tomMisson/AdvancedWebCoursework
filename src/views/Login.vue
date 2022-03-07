@@ -24,22 +24,31 @@
           v-model="form.password"
         />
       </div>
-      <button class="btn btn-primary" type="button" @click="submit">Login</button>
+      <button class="btn btn-primary my-3" type="button" @click="submit">
+        Login
+      </button>
+      <router-link to="/register"
+        ><button class="btn btn-primary m-3" type="button">
+          Register
+        </button></router-link
+      >
     </form>
     <div class="login">
-     <p>Forgot your Password? 
-     <router-link to="/resetpassword">Reset Password</router-link> </p>
+      <p>
+        Forgot your Password?
+        <router-link to="/resetpassword">Reset Password</router-link>
+      </p>
     </div>
     <div v-if="error.error" class="alert alert-warning" role="alert">
-      {{error.errorMessage}}
+      {{ error.errorMessage }}
     </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
-import {reactive} from "vue";
-import router from '../router/index';
+import { reactive } from "vue";
+import router from "../router/index";
 
 export default {
   setup() {
@@ -49,27 +58,22 @@ export default {
     });
 
     const form = reactive({
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     });
 
     function submit() {
       firebase
         .auth()
         .signInWithEmailAndPassword(form.email, form.password)
+        .then((res) => (res?.user ? router.push({ path: "/account" }) : null))
         .catch((err) => {
-          error.error = true
-          error.errorMessage = err
+          error.error = true;
+          error.errorMessage = err;
         });
-
-      const user = firebase.auth().currentUser;
-      
-      if (user){
-        router.push({ path: '/account' })
-      }
     }
-  
-  return {form, submit, error};
+
+    return { form, submit, error };
   },
 };
 </script>

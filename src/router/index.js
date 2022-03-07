@@ -10,15 +10,19 @@ const routes = [
     path: "/account",
     name: "Account",
 
-    component: () =>
-      import( "../views/Account.vue"),
+    component: () => import("../views/Account.vue"),
   },
   {
     path: "/submitdata",
     name: "SubmitData",
 
-    component: () =>
-      import( "../views/SubmitData.vue"),
+    component: () => import("../views/SubmitData.vue"),
+  },
+  {
+    path: "/querydata",
+    name: "QueryData",
+
+    component: () => import("../views/QueryData.vue"),
   },
   {
     path: "/help",
@@ -46,10 +50,15 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
   },
   {
-    path: "/genedetails",
-    name: "GeneDetails",
+    path: "/explore",
+    name: "Explore",
 
-    component: () => import( "../views/GeneDetails.vue"),
+    component: () => import("../views/Explore.vue"),
+  },
+  {
+    path: "/queryData",
+    name: "QueryData",
+    component: () => import("../views/QueryData.vue"),
   },
   {
     path: "/resetpassword",
@@ -60,11 +69,17 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "shush" */ "../views/ResetPassword.vue"),
   },
+     {
+        path: "/editdata",
+        name: "EditData",
+        component: () =>
+            import ("../views/EditData.vue"),
+    },
   {
     path: "/:catchAll(.*)",
     name: "404",
 
-    component: () => import( "../views/404.vue"),
+    component: () => import("../views/404.vue"),
   },
 ];
 
