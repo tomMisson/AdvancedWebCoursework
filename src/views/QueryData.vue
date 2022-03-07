@@ -29,8 +29,8 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
         <h4>Second dimension</h4>
-        <select class="form-select" id="fd" v-model="secondDimension">
-          <option disabled value="">Select one</option>
+        <select class="form-select" id="sd" v-model="secondDimension">
+          <option value="">Select one</option>
           <option
             v-for="dimension in dimensions"
             :value="dimension"
@@ -166,49 +166,53 @@ export default {
           },
         },
         yaxis: [
-        {
-          title: {
-            text: "",
-          },
-          labels: {
-            formatter: (value) => {
-              return isNaN(value) ? value : Math.round(value * 100) / 100;
+          {
+            title: {
+              text: "",
+            },
+            labels: {
+              formatter: (value) => {
+                return isNaN(value) ? value : Math.round(value * 100) / 100;
+              },
             },
           },
-        },
-        {
-          opposite: true,
-          title: {
-            text: "idk",
-          },
-          labels: {
-            formatter: (value) => {
-              return isNaN(value) ? value : Math.round(value * 100) / 100;
+          {
+            opposite: true,
+            title: {
+              text: "",
             },
+            labels: {
+              formatter: (value) => {
+                return isNaN(value) ? value : Math.round(value * 100) / 100;
+              },
+            },
+            colors: ["#008ffb"],
           },
-        colors: ["#008ffb"],
-        }
-        ]
-      }
+        ],
+      };
 
-      if (firstDimension.value && geneSelection.value) {
+      if (
+        firstDimension.value &&
+        geneSelection.value &&
+        secondDimension.value
+      ) {
         try {
           var resultsObj = await getDataForDimension(
             geneSelection.value,
-            firstDimension.value, 
+            firstDimension.value,
             secondDimension.value
           );
 
           baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value} and ${secondDimension.value}`;
 
           if (resultsObj.dataType === "numeric") {
-            baseChartOptions.yaxis.title.text = firstDimension.value;
-            // baseChartOptions.yaxis.title.text = secondDimension.value;            
+            baseChartOptions.yaxis[0].title.text = firstDimension.value;
+            baseChartOptions.yaxis[1].title.text = secondDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
             baseChartOptions.yaxis.title.text = geneSelection.value;
-            // baseChartOptions.xaxis[1].title.text = secondDimension.value;
-            baseChartOptions.xaxis[0].title.text = firstDimension.value;
+            baseChartOptions.xaxis.title[1].text = secondDimension.value;
+            baseChartOptions.xaxis.title[2].text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
           }
 
@@ -219,9 +223,9 @@ export default {
               ? resultsObj.dataPoints
               : convertOccourancesToDataPoints(resultsObj.occurrences);
 
-              const chartData2 =
+          const chartData2 =
             resultsObj.dataType2 === "numeric"
-              ? resultsObj.dataPoints
+              ? resultsObj.dataPoints2
               : convertOccourancesToDataPoints(resultsObj.occurrences);
 
           series.value = [
@@ -230,6 +234,40 @@ export default {
             },
             {
               data: chartData2,
+            },
+          ];
+        } catch (err) {
+          error.error = true;
+          error.errorMessage = err;
+        }
+      } else if (firstDimension.value && geneSelection.value) {
+        try {
+          var resultsObj2 = await getDataForDimension(
+            geneSelection.value,
+            firstDimension.value
+          );
+
+          baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value}`;
+
+          if (resultsObj2.dataType === "numeric") {
+            baseChartOptions.yaxis[0].title.text = firstDimension.value;
+            baseChartOptions.xaxis.title.text = geneSelection.value;
+          } else {
+            baseChartOptions.yaxis[0].title.text = geneSelection.value;
+            baseChartOptions.xaxis.title.text = firstDimension.value;
+            baseChartOptions.xaxis.labels.show = true;
+          }
+
+          chartOptions.value = baseChartOptions;  
+
+          const chartData =
+            resultsObj2.dataType === "numeric"
+              ? resultsObj2.dataPoints
+              : convertOccourancesToDataPoints(resultsObj2.occurrences);
+
+          series.value = [
+            {
+              data: chartData,
             }
           ];
         } catch (err) {
@@ -247,6 +285,7 @@ export default {
       cmType,
       geneSelection,
       firstDimension,
+      secondDimension,
       generateGraph,
       dimensions,
       mutationTypes,

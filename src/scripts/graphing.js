@@ -48,7 +48,6 @@ export async function getDataForDimension(gene, dimensionName, dimensionName2) {
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
-                console.log("mutated genees: " + data.mutatedGenes)
                 if (typeof data[dimensionName] !== 'undefined' && data.mutatedGenes.includes(gene)) {
                     dataPoints.push(data[dimensionName]);
                 }
@@ -75,8 +74,8 @@ export async function getDataForDimension(gene, dimensionName, dimensionName2) {
         dataType2 = "numeric";
     else if (typeof dataPoints2[0] === 'string' || typeof dataPoints2[0] === 'boolean') {
         dataType2 = "category";
-        occurrences = dataPoints2.reduce(function (acc, curr) {
-            return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+        occurrences = dataPoints2.reduce(function (acc2, curr2) {
+            return acc2[curr2] ? ++acc2[curr2] : acc2[curr2] = 1, acc2
         }, {});
     }
 
