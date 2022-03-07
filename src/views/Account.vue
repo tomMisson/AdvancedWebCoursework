@@ -70,8 +70,8 @@ export default {
           '<div class="card" id="' +
           doc.id +
           '"> <div class="card-header" id="' +
-          '"> <h5 class="mb-0"> <button class="btn" data-toggle="collapse" ' +
-          ' data-target="#collapse-' +
+          '"> <h5 class="mb-0"> <button class="btn" data-bs-toggle="collapse" ' +
+          ' data-bs-target="#collapse-' +
           count +
           '" aria-expanded="false" aria-controls="collapse-' +
           count +
@@ -83,7 +83,7 @@ export default {
           '" ' +
           ' class="collapse" aria-labelledby="' +
           count +
-          '" data-parent="#userData" > ' +
+          '" data-bs-parent="#userData" > ' +
           ' <div class="card-body"> <table class="table table-sm userData"> <thead> ' +
           ' <tr> <th scope="col">Patient Data</th> <th class="col-md-3" ' +
           ' scope="col">Value</th> </tr> </thead> <tbody> ';
