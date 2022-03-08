@@ -44,22 +44,35 @@ export async function getDataForDimension(gene, dimensionName, dimensionName2) {
     }
 
     await firestore.collection("patientData")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                if (typeof data[dimensionName] !== 'undefined' && data.mutatedGenes.includes(gene)) {
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            if(typeof data[dimensionName] !== 'undefined'){
+                if (gene === ""){
                     dataPoints.push(data[dimensionName]);
                 }
-                if (typeof data[dimensionName2] !== 'undefined' && data.mutatedGenes.includes(gene)) {
+                else {
+                    if (data.mutatedGenes.includes(gene)){
+                        dataPoints.push(data[dimensionName]);
+                    }
+                }
+            }
+            if(typeof data[dimensionName2] !== 'undefined'){
+                if (gene === ""){
                     dataPoints2.push(data[dimensionName2]);
                 }
-            });
-
+                else {
+                    if (data.mutatedGenes.includes(gene)){
+                        dataPoints2.push(data[dimensionName2]);
+                    }
+                }
+            }
         })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
 
     if (typeof dataPoints[0] === 'number')
         dataType = "numeric";
@@ -70,7 +83,7 @@ export async function getDataForDimension(gene, dimensionName, dimensionName2) {
         }, {});
     }
 
-        if (typeof dataPoints2[0] === 'number')
+    if (typeof dataPoints2[0] === 'number')
         dataType2 = "numeric";
     else if (typeof dataPoints2[0] === 'string' || typeof dataPoints2[0] === 'boolean') {
         dataType2 = "category";

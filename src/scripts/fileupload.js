@@ -35,7 +35,7 @@ const expectedResponse={
     AgeatMRI: {
         type: Number
     },
-    apicalHCM: {
+    atypicalHCM: {
         type: Boolean
     },
     suddenCardiacDeath: {
@@ -77,11 +77,11 @@ export function convertCSVtoJson(csvString){
 
         var obj = {};
         var currentline=lines[i].split(",");
-  
+
         for(var j=0;j<headers.length;j++){
             obj[headers[j]] = currentline[j];
         }
-  
+
         result.push(obj);
     }
 
@@ -93,7 +93,7 @@ export function extractDataAndConvertToModel(jsonArray){
 
     jsonArray.forEach((item) => {
         let obj = {}
-        
+
         Object.keys(expectedResponse).forEach(key => {
             if (expectedResponse[key].type == Number)
             {
@@ -126,7 +126,7 @@ export function extractDataAndConvertToModel(jsonArray){
             else if (expectedResponse[key].type == Array)
             {
                 let array = [];
-        
+
                 Object.keys(item).forEach(key => {
                     if (key.includes("mutation") || expectedGenes.some(r=> key.includes(r))){
                         if(item[key] == 1){
@@ -145,7 +145,7 @@ export function extractDataAndConvertToModel(jsonArray){
         if(obj.mutatedGenes.length != 0){
             resultArray.push(obj);
         }
-        
+
     }, [])
 
     return resultArray;

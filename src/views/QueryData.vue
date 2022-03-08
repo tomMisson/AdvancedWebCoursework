@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene" v-model="geneSelection">
-          <option disabled value="">Select one</option>
+          <option value="">Select one</option>
           <option
             v-for="mutation in mutationTypes"
             :value="mutation"
@@ -14,7 +14,7 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <h4>First dimension</h4>
         <select class="form-select" id="fd" v-model="firstDimension">
           <option disabled value="">Select one</option>
@@ -27,7 +27,7 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <h4>Second dimension</h4>
         <select class="form-select" id="sd" v-model="secondDimension">
           <option value="">Select one</option>
@@ -192,32 +192,36 @@ export default {
       };
 
       if (
-        firstDimension.value &&
-        geneSelection.value &&
-        secondDimension.value
+        firstDimension.value ||
+        (firstDimension.value && secondDimension.value)
       ) {
         try {
+          //Get data for dimensions and filters
           var resultsObj = await getDataForDimension(
             geneSelection.value,
             firstDimension.value,
             secondDimension.value
           );
 
-          baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value} and ${secondDimension.value}`;
+          // Set chart title
+          baseChartOptions.title.text = `${firstDimension.value} ${
+            secondDimension.value ? "against " + secondDimension.value : ""
+          } ${geneSelection.value ? "filtered by " + geneSelection.value : ""}`;
 
           if (resultsObj.dataType === "numeric") {
             baseChartOptions.yaxis[0].title.text = firstDimension.value;
             baseChartOptions.yaxis[1].title.text = secondDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
-            baseChartOptions.yaxis[0].title.text = geneSelection.value;
-            baseChartOptions.xaxis.title.text = secondDimension.value;
-            baseChartOptions.xaxis.title.text = firstDimension.value;
+            baseChartOptions.xaxis.title.text = `${firstDimension.value} ${
+              secondDimension.value ? "against " + secondDimension.value : ""
+            }`;
             baseChartOptions.xaxis.labels.show = true;
           }
 
           chartOptions.value = baseChartOptions;
 
+          // Chart Data
           const chartData =
             resultsObj.dataType === "numeric"
               ? resultsObj.dataPoints
@@ -228,56 +232,30 @@ export default {
               ? resultsObj.dataPoints2
               : convertOccourancesToDataPoints(resultsObj.occurrences);
 
-          series.value = [
+          let seriesArray = [
             {
+              name: firstDimension.value,
               data: chartData,
             },
-            {
-              data: chartData2,
-            },
           ];
-        } catch (err) {
-          error.error = true;
-          error.errorMessage = err;
-        }
-      } else if (firstDimension.value && geneSelection.value) {
-        try {
-          var resultsObj2 = await getDataForDimension(
-            geneSelection.value,
-            firstDimension.value
-          );
 
-          baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value}`;
+          console.log(chartData2);
 
-          if (resultsObj2.dataType === "numeric") {
-            baseChartOptions.yaxis[0].title.text = firstDimension.value;
-            baseChartOptions.xaxis.title.text = geneSelection.value;
-          } else {
-            baseChartOptions.yaxis.title.text = geneSelection.value;
-            baseChartOptions.xaxis.title.text = firstDimension.value;
-            baseChartOptions.xaxis.labels.show = true;
+          if (chartData2.length > 0) {
+            seriesArray.push({
+              name: secondDimension.value,
+              data: chartData2,
+            });
           }
 
-          chartOptions.value = baseChartOptions;  
-
-          const chartData =
-            resultsObj2.dataType === "numeric"
-              ? resultsObj2.dataPoints
-              : convertOccourancesToDataPoints(resultsObj2.occurrences);
-
-          series.value = [
-            {
-              data: chartData,
-            }
-          ];
+          series.value = seriesArray;
         } catch (err) {
           error.error = true;
           error.errorMessage = err;
         }
       } else {
         error.error = true;
-        error.errorMessage =
-          "Unable to generate graph due to invalid criteria selection";
+        error.errorMessage = "Please select at least 1 dimension";
       }
     }
 
