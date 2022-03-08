@@ -35,6 +35,7 @@
             v-for="dimension in dimensions"
             :value="dimension"
             :key="dimension"
+            :disabled="dimension === firstDimension"
           >
             {{ dimension }}
           </option>
@@ -239,6 +240,7 @@ export default {
             },
           ];
 
+          console.log(chartData);
           console.log(chartData2);
 
           if (chartData2.length > 0) {
