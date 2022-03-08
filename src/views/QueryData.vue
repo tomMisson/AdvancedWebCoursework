@@ -211,8 +211,8 @@ export default {
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
             baseChartOptions.yaxis.title.text = geneSelection.value;
-            baseChartOptions.xaxis.title[1].text = secondDimension.value;
-            baseChartOptions.xaxis.title[2].text = firstDimension.value;
+            baseChartOptions.xaxis.title.text = secondDimension.value;
+            baseChartOptions.xaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
           }
 
@@ -253,7 +253,7 @@ export default {
             baseChartOptions.yaxis[0].title.text = firstDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
-            baseChartOptions.yaxis[0].title.text = geneSelection.value;
+            baseChartOptions.yaxis.title.text = geneSelection.value;
             baseChartOptions.xaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
           }
