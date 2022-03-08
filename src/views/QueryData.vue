@@ -210,7 +210,7 @@ export default {
             baseChartOptions.yaxis[1].title.text = secondDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
-            baseChartOptions.yaxis.title.text = geneSelection.value;
+            baseChartOptions.yaxis[0].title.text = geneSelection.value;
             baseChartOptions.xaxis.title.text = secondDimension.value;
             baseChartOptions.xaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
