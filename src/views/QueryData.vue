@@ -27,7 +27,7 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-12 col-sm-12">
         <h4>Second dimension</h4>
         <select class="form-select" id="sd" v-model="secondDimension">
           <option value="">Select one</option>
