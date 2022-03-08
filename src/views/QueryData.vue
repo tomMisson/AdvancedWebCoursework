@@ -4,7 +4,7 @@
       <div class="col-lg-6 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene" v-model="geneSelection">
-          <option disabled value="">Select one</option>
+          <option value="">Select one</option>
           <option
             v-for="mutation in mutationTypes"
             :value="mutation"
@@ -171,7 +171,9 @@ export default {
             firstDimension.value
           );
 
-          baseChartOptions.title.text = `${firstDimension.value} ${geneSelection.value ? "filtered by " + geneSelection.value : ""}`;
+          baseChartOptions.title.text = `${firstDimension.value} ${
+            geneSelection.value ? "filtered by " + geneSelection.value : ""
+          }`;
 
           if (resultsObj.dataType === "numeric") {
             baseChartOptions.yaxis.title.text = firstDimension.value;
