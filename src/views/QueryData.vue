@@ -233,6 +233,18 @@ export default {
               ? resultsObj.dataPoints2
               : convertOccourancesToDataPoints(resultsObj.occurrences);
 
+          if (
+            (resultsObj.dataType === "numeric" &&
+              resultsObj.dataType2 === "category") ||
+            (resultsObj.dataType === "category" &&
+              resultsObj.dataType2 === "numeric")
+          ) {
+            error.error = true;
+            error.errorMessage =
+              "Cannot compare two different data types. Please select different dimensions.";
+            return;
+          }
+
           let seriesArray = [
             {
               name: firstDimension.value,
