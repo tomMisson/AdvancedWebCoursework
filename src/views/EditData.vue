@@ -209,7 +209,7 @@
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
-    <p>Apical HCM :</p>
+    <p>Atypical HCM :</p>
     <div class="form-check">
       <input
         class="form-check-input"
@@ -217,7 +217,7 @@
         name="HCM"
         id="Yes"
         value="Yes"
-        v-model="formFieldData.apicalHCM"
+        v-model="formFieldData.atypicalHCM"
       >
       <label class="form-check-label" for="Yes"> Yes </label>
     </div>
@@ -228,7 +228,7 @@
         name="HCM"
         id="No"
         value="No"
-        v-model="formFieldData.apicalHCM"
+        v-model="formFieldData.atypicalHCM"
       >
       <label class="form-check-label" for="No"> No </label>
     </div>
@@ -454,7 +454,7 @@ export default {
       scarring: "",
       gender: "",
       mriAge: "",
-      apicalHCM: "",
+      atypicalHCM: "",
       suddenCardiacDeath: "",
       hypertension: "",
       diabetes: "",
@@ -477,7 +477,7 @@ export default {
     function updateData() {
       firestore.collection("/patientData").doc(route.params.id).update({
         ageAtMRI: formFieldData.mriAge,
-        apicalHCM: formFieldData.apicalHCM,
+        atypicalHCM: formFieldData.atypicalHCM,
         diabetes: formFieldData.diabetes,
         gender: formFieldData.gender,
         hypertension: formFieldData.hypertension,
@@ -511,4 +511,3 @@ export default {
   margin: 0.2%;
 }
 </style>
-
