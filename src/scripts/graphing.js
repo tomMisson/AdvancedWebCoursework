@@ -47,8 +47,15 @@ export async function getDataForDimension(gene, dimensionName) {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             var data = doc.data();
-            if(typeof data[dimensionName] !== 'undefined' && data.mutatedGenes.includes(gene)){
-                dataPoints.push(data[dimensionName]);
+            if(typeof data[dimensionName] !== 'undefined'){
+                if (gene === ""){
+                    dataPoints.push(data[dimensionName]);
+                }
+                else {
+                    if (data.mutatedGenes.includes(gene)){
+                        dataPoints.push(data[dimensionName]);
+                    }
+                }
             }
         });
 

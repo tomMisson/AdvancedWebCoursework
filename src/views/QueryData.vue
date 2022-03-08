@@ -164,20 +164,19 @@ export default {
         colors: ["#008ffb"],
       };
 
-      if (firstDimension.value && geneSelection.value) {
+      if (firstDimension.value) {
         try {
           var resultsObj = await getDataForDimension(
             geneSelection.value,
             firstDimension.value
           );
 
-          baseChartOptions.title.text = `${geneSelection.value} against ${firstDimension.value}`;
+          baseChartOptions.title.text = `${firstDimension.value} ${geneSelection.value ? "filtered by " + geneSelection.value : ""}`;
 
           if (resultsObj.dataType === "numeric") {
             baseChartOptions.yaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
-            baseChartOptions.yaxis.title.text = geneSelection.value;
             baseChartOptions.xaxis.title.text = firstDimension.value;
             baseChartOptions.xaxis.labels.show = true;
           }
