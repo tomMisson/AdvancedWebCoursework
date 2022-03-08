@@ -1,7 +1,12 @@
 <template>
   <div class="card">
     <a :href="url" target="_blank">
-      <img class="card-img-top" :src="image" alt="Card image cap" />
+      <img
+        v-if="image"
+        class="card-img-top"
+        :src="image"
+        alt="Card image cap"
+      />
     </a>
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
