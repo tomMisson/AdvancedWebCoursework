@@ -9,7 +9,7 @@ describe('rest password page works', () => {
     })
 
     it('Add rest password eamil details, expect success', () => {
-        cy.get('#email').type("w1097304549@gmail.com");
+        cy.get('#email').type("test@test.com");
         cy.get('#resetpassword-button').click();
 
         cy.get('.alert').should('have.length', 1).contains("Email has been sent to you, please check your emails and verify.");
