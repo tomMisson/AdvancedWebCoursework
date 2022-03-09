@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <h4>Gene mutation</h4>
         <select class="form-select" id="Gene" v-model="geneSelection">
           <option value="">Select one</option>
@@ -14,7 +14,7 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <h4>First dimension</h4>
         <select class="form-select" id="fd" v-model="firstDimension">
           <option disabled value="">Select one</option>
@@ -22,6 +22,20 @@
             v-for="dimension in dimensions"
             :value="dimension"
             :key="dimension"
+          >
+            {{ dimension }}
+          </option>
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12">
+        <h4>Second dimension</h4>
+        <select class="form-select" id="sd" v-model="secondDimension">
+          <option value="">Select one</option>
+          <option
+            v-for="dimension in dimensions"
+            :value="dimension"
+            :key="dimension"
+            :disabled="dimension === firstDimension"
           >
             {{ dimension }}
           </option>
@@ -112,6 +126,7 @@ export default {
     const cmType = ref("Hypertrophic");
     const geneSelection = ref("");
     const firstDimension = ref("");
+    const secondDimension = ref("");
 
     const error = reactive({
       error: false,
@@ -151,58 +166,110 @@ export default {
             show: false,
           },
         },
-        yaxis: {
-          title: {
-            text: "",
-          },
-          labels: {
-            formatter: (value) => {
-              return isNaN(value) ? value : Math.round(value * 100) / 100;
+        yaxis: [
+          {
+            title: {
+              text: "",
+            },
+            labels: {
+              formatter: (value) => {
+                return isNaN(value) ? value : Math.round(value * 100) / 100;
+              },
             },
           },
-        },
-        colors: ["#008ffb"],
+          {
+            opposite: true,
+            title: {
+              text: "",
+            },
+            labels: {
+              formatter: (value) => {
+                return isNaN(value) ? value : Math.round(value * 100) / 100;
+              },
+            },
+            colors: ["#008ffb"],
+          },
+        ],
       };
 
-      if (firstDimension.value) {
+      if (
+        firstDimension.value ||
+        (firstDimension.value && secondDimension.value)
+      ) {
         try {
+          //Get data for dimensions and filters
           var resultsObj = await getDataForDimension(
             geneSelection.value,
-            firstDimension.value
+            firstDimension.value,
+            secondDimension.value
           );
 
+          // Set chart title
           baseChartOptions.title.text = `${firstDimension.value} ${
-            geneSelection.value ? "filtered by " + geneSelection.value : ""
-          }`;
+            secondDimension.value ? "against " + secondDimension.value : ""
+          } ${geneSelection.value ? "filtered by " + geneSelection.value : ""}`;
 
           if (resultsObj.dataType === "numeric") {
-            baseChartOptions.yaxis.title.text = firstDimension.value;
+            baseChartOptions.yaxis[0].title.text = firstDimension.value;
+            baseChartOptions.yaxis[1].title.text = secondDimension.value;
             baseChartOptions.xaxis.title.text = geneSelection.value;
           } else {
-            baseChartOptions.xaxis.title.text = firstDimension.value;
+            baseChartOptions.xaxis.title.text = `${firstDimension.value} ${
+              secondDimension.value ? "against " + secondDimension.value : ""
+            }`;
             baseChartOptions.xaxis.labels.show = true;
           }
 
           chartOptions.value = baseChartOptions;
 
+          // Chart Data
           const chartData =
             resultsObj.dataType === "numeric"
               ? resultsObj.dataPoints
               : convertOccourancesToDataPoints(resultsObj.occurrences);
 
-          series.value = [
+          const chartData2 =
+            resultsObj.dataType2 === "numeric"
+              ? resultsObj.dataPoints2
+              : convertOccourancesToDataPoints(resultsObj.occurrences);
+
+          if (
+            (resultsObj.dataType === "numeric" &&
+              resultsObj.dataType2 === "category") ||
+            (resultsObj.dataType === "category" &&
+              resultsObj.dataType2 === "numeric")
+          ) {
+            error.error = true;
+            error.errorMessage =
+              "Cannot compare two different data types. Please select different dimensions.";
+            return;
+          }
+
+          let seriesArray = [
             {
+              name: firstDimension.value,
               data: chartData,
             },
           ];
+
+          console.log(chartData);
+          console.log(chartData2);
+
+          if (chartData2.length > 0) {
+            seriesArray.push({
+              name: secondDimension.value,
+              data: chartData2,
+            });
+          }
+
+          series.value = seriesArray;
         } catch (err) {
           error.error = true;
           error.errorMessage = err;
         }
       } else {
         error.error = true;
-        error.errorMessage =
-          "Unable to generate graph due to invalid criteria selection";
+        error.errorMessage = "Please select at least 1 dimension";
       }
     }
 
@@ -210,6 +277,7 @@ export default {
       cmType,
       geneSelection,
       firstDimension,
+      secondDimension,
       generateGraph,
       dimensions,
       mutationTypes,
