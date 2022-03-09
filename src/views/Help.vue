@@ -114,7 +114,7 @@ export default {
           id: "7",
           title:
             'Please navigate to the "Query Data" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/jty66w",
+          src: "https://streamable.com/e/9rmt13",
         },
       ],
     };
