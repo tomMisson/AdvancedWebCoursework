@@ -216,20 +216,20 @@
             type="checkbox"
             name="Scarring"
             id="Scarring"
-            v-model="formModel.scarring"
+            v-model="formModel.scar"
           />
-          Scarring
+          Scar
         </label>
 
-        <label class="form-check-label" for="ApicalHCM">
+        <label class="form-check-label" for="AtypicalHCM">
           <input
             class="form-check-input"
             type="checkbox"
-            name="ApicalHCM"
-            id="ApicalHCM"
-            v-model="formModel.apicalHCM"
+            name="AtypicalHCM"
+            id="AtypicalHCM"
+            v-model="formModel.atypicalHCM"
           />
-          Apical HCM
+          Atypical HCM
         </label>
 
         <label class="form-check-label" for="SuddenCardiacDeath">
@@ -281,47 +281,47 @@
       <div class="d-flex justify-content-between text-left">
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.MYH7"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.MYH7"/>
           MYH7
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.MYBPC3"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.MYBPC3"/>
           MYBPC3
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.TNNT2"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.TNNT2"/>
           TNNT2
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.ACTC"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.ACTC"/>
           ACTC
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.TPM1"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.TPM1"/>
           TPM1
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.TNNCI"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.TNNCI"/>
           TNNCI
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.TNNI3"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.TNNI3"/>
           TNNI3
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.MYL2"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.MYL2"/>
           MYL2
         </label>
 
         <label class="form-check-label" for="gene">
-          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.geneMutations.TTN"/>
+          <input class="form-check-input" type="checkbox" name="gene" v-model="formModel.mutatedGenes.TTN"/>
           TTN
         </label>
       </div>
@@ -386,14 +386,14 @@ export default {
       lsv: "",
       rsv: "",
       fibrosis: false,
-      scaring: false,
+      scar: false,
       gender: "",
       ageAtMRI: "",
       atypicalHCM: false,
       hypertension: false,
       diabetes: false,
       myectomy: false,
-      geneMutations: {
+      mutatedGenes: {
         MYH7: false,
         MYBPC3: false,
         TNNT2: false,
@@ -490,8 +490,10 @@ export default {
         isProcessingManual.value = false;
         return;
       }
-      
-      formModel.geneMutations = Object.keys(formModel.geneMutations).filter(key => formModel.geneMutations[key]);
+
+      formModel.mutatedGenes = Object.keys(formModel.mutatedGenes).filter(
+        (key) => formModel.mutatedGenes[key]
+      );
 
       firestore
         .collection("patientData")

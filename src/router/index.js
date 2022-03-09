@@ -70,7 +70,7 @@ const routes = [
       import(/* webpackChunkName: "shush" */ "../views/ResetPassword.vue"),
   },
      {
-        path: "/editdata",
+        path: "/editdata/:id",
         name: "EditData",
         component: () =>
             import ("../views/EditData.vue"),

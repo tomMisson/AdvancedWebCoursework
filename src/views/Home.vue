@@ -1,9 +1,10 @@
 <template>
-  <div class="px-4 py-2 my-5 text-center">
+  <div class="px-4 py-2 my-5 text-center" id="hero">
     <img
       class="d-block mx-auto mb-4"
       src="../../public/assets/CardianTransparent2.png"
       alt=""
+      id="logo"
       height="150"
     />
     <h1 class="display-5 fw-bold" style="margin: auto">
@@ -21,7 +22,8 @@
       </p>
     </div>
   </div>
-  <CardsList :articles="articles" />
+
+  <CardsList :articles="articles" id="cardList" />
 </template>
 
 <script>

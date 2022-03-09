@@ -24,7 +24,12 @@
           v-model="form.password"
         />
       </div>
-      <button class="btn btn-primary my-3" type="button" @click="submit">
+      <button
+        class="btn btn-primary my-3"
+        type="button"
+        @click="submit"
+        id="login-button"
+      >
         Login
       </button>
       <router-link to="/register"
