@@ -421,8 +421,8 @@
       />
       <label class="form-check-label" for="TTN">TTN</label>
     </div>
+    <button class="btn btn-warning" @click="updateData" type="submit" >Submit data</button>
   </form>
-  <button class="btn btn-warning" @click="updateData">Submit data</button>
 </template>
 
 <script>
