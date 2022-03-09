@@ -101,8 +101,8 @@ export default {
         {
           id: "5",
           title:
-            'Please navigate to the "???" tab while hovering over the "Home" tab, a video demonstration is shown below:',
-          src: "https://streamable.com/e/i9383n",
+            'Please navigate to the "Account" tab after submitting data, a video demonstration is shown below:',
+          src: "https://streamable.com/e/1hwntk",
         },
         {
           id: "6",
