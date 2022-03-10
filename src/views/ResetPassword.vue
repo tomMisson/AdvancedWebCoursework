@@ -12,7 +12,7 @@
       autofocus
       v-model="email"
     />
-    <button class="btn btn-primary my-2" @click="resetPassword">Send</button>
+    <button class="btn btn-primary my-2" @click="resetPassword" id="resetpassword-button" >Send</button>
     <br />
     <router-link to="/register"> Need an account ?</router-link>
 
