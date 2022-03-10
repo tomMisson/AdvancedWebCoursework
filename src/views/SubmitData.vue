@@ -9,10 +9,10 @@
     </p>
     <h2>Upload a file</h2>
     <form @submit.prevent="submit">
-      <div class="form-group my-5">
+      <div class="form-group my-5" id="upload_file_part">
         <input id="upload" type="file" @change="onFileUploaded" class="form-control-file" accept="text/json text/csv" />
         <template v-if="!isProcessing">
-          <button class="btn btn-warning" @click="onSubmit"> Submit data </button>
+          <button class="btn btn-warning" @click="onSubmit" id="submit_data_upload"> Submit data </button>
         </template>
 
         <template v-else>
@@ -31,7 +31,7 @@
     <!-- -------------------------------------------------------------- -->
 
     <h2>Manual data insert</h2>
-    <form v-if="!isProcessing" class="w-auto p-3 form-group row" @submit.prevent="submit">
+    <form v-if="!isProcessing" class="w-auto p-3 form-group row" id="manual_add_part" @submit.prevent="submit">
       <div class="LEDV col-lg-6">
         <label for="LEDV" class="form-LEDV"
           >Left ventricular end diastolic volume (LEDV):
@@ -327,7 +327,7 @@
       </div>
 
       <template v-if="!isProcessingManual">
-        <button class="mt-4 btn btn-warning" @click="submitManualEntry"> Submit data </button>
+        <button class="mt-4 btn btn-warning" id="submit_data_manually" @click="submitManualEntry"> Submit data </button>
       </template>
       <template v-else>
         <p>Processing</p>
@@ -443,38 +443,46 @@ export default {
     function onSubmit() {
       isProcessing.value = true;
 
-      data.value.forEach((item) => {
-        item["owner"] = firebase.auth()?.currentUser?.uid;
-        item["createdAt"] = firebase.firestore.FieldValue.serverTimestamp();
-        firestore
-          .collection("patientData")
-          .add(item)
-          .then(() => {
-            success.numRecords += 1;
-          })
-          .catch((error) => {
-            console.error("Error writing document: ", error);
-          });
-      });
+      if(Object.keys(data.value).length > 0){
+        data.value.forEach((item) => {
+          item["owner"] = firebase.auth()?.currentUser?.uid;
+          item["createdAt"] = firebase.firestore.FieldValue.serverTimestamp();
+          firestore
+            .collection("patientData")
+            .add(item)
+            .then(() => {
+              success.numRecords += 1;
+            })
+            .catch((error) => {
+              console.error("Error writing document: ", error);
+            });
+        });
 
-      isProcessing.value = false;
-      success.success = true;
+        isProcessing.value = false;
+        success.success = true;
+      }else{
+        error.error = true;
+        error.errorMessage = "Please upload a file before submitting.";
+        isProcessing.value = false;
+        success.success = false;
+      }
+
     }
 
     function ValidateForm() {
       if (
-        formModel.ledv.length > 0 &&
-        formModel.lesv.length > 0 &&
-        formModel.resv.length > 0 &&
-        formModel.redv.length > 0 &&
-        formModel.lvef.length > 0 &&
-        formModel.rvef.length > 0 &&
-        formModel.lvmass.length > 0 &&
-        formModel.rvmass.length > 0 &&
-        formModel.lsv.length > 0 &&
-        formModel.rsv.length > 0 &&
-        formModel.gender.length > 0 &&
-        formModel.ageAtMRI.length > 0
+        formModel.ledv != "" &&
+        formModel.lesv != "" &&
+        formModel.resv != "" &&
+        formModel.redv != "" &&
+        formModel.lvef != "" &&
+        formModel.rvef != "" &&
+        formModel.lvmass != "" &&
+        formModel.rvmass != "" &&
+        formModel.lsv != "" &&
+        formModel.rsv != "" &&
+        formModel.gender != "" &&
+        formModel.ageAtMRI != ""
       ) {
         return true;
       } else {
@@ -484,7 +492,7 @@ export default {
 
     function submitManualEntry() {
       isProcessingManual.value = true;
-      if (ValidateForm()) {
+      if (!ValidateForm()) {
         errorManual.error = true;
         errorManual.errorMessage = "Please fill out all fields.";
         isProcessingManual.value = false;
