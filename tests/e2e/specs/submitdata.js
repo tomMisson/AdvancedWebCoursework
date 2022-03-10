@@ -21,7 +21,7 @@ describe("SubmitData page appear", () => {
   });
 
   it("Check if user didn't add data manually", () => {
-    cy.get("#submit_data_manually").click();
+    cy.get("#submit_data_manually").click({ force: true });
     cy.get(".alert");
   });
 });
