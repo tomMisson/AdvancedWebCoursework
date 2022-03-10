@@ -8,6 +8,7 @@
     </p>
     <h2 class="mt-5">Explore our database</h2>
     <select
+      id="cardio_select"
       name="cmType"
       class="form-select"
       autofocus
@@ -42,6 +43,7 @@
 
     <form @submit.prevent="submit" class="d-inline-flex">
       <select
+        id="gene_select"
         class="form-select"
         name="typeSelect"
         v-model="searchType"
@@ -52,6 +54,7 @@
         <option value="cm">Term</option>
       </select>
       <input
+        id="text_type"
         type="text"
         class="form-control mx-2 flex-grow-1"
         name="searchTerm"
