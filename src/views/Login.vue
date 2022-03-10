@@ -33,7 +33,7 @@
         Login
       </button>
       <router-link to="/register"
-        ><button class="btn btn-primary m-3" type="button">
+        ><button class="btn btn-primary m-3" type="button" id="register-button">
           Register
         </button></router-link
       >
