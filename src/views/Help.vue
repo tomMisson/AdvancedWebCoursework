@@ -9,6 +9,7 @@
             with
           </p>
           <select
+            id="select_help"
             v-model="help_item"
             class="form-select my-4"
             aria-label="Default select example"

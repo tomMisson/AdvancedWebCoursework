@@ -1,15 +1,6 @@
 <template>
   <nav
-    class="
-      navbar navbar-expand-lg navbar-light
-      bg-light
-      justify-content-end
-      shadow-lg
-      p-3
-      mb-5
-      bg-white
-      rounded
-    "
+    class="navbar navbar-expand-lg navbar-light bg-light justify-content-end shadow-lg p-3 mb-5 bg-white rounded"
   >
     <ul class="nav">
       <li class="nav-item">

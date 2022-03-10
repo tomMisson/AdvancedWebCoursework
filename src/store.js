@@ -7,22 +7,22 @@ const initialState = {
     data: {
       displayName: "",
       email: "",
-    }
-  }
+    },
+  },
 };
 
 export default new Vuex.Store({
   state: initialState,
   getters: {
-    user(state){
-      return state.user
+    user(state) {
+      return state.user;
     },
-    userData(state){
-      return state.user.data
+    userData(state) {
+      return state.user.data;
     },
-    isLoggedIn(state){
-      return state.user.loggedIn
-    }
+    isLoggedIn(state) {
+      return state.user.loggedIn;
+    },
   },
   mutations: {
     SET_LOGGED_IN(state, value) {
@@ -30,29 +30,31 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user.data = data;
-    }
+    },
   },
   actions: {
     setUser({ commit }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
-        firestore.collection("users").doc(user.uid).get()
-        .then(snapshot => {
-          return snapshot.data();
-        })
-        .then((userDataFromDb) => {
-          commit("SET_USER", {
-            displayName: user.displayName,
-            email: user.email,
-            ...userDataFromDb
+        firestore
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((snapshot) => {
+            return snapshot.data();
           })
-          .catch(err => {
-            console.error("Error getting documents", err);
-          })
-        });
+          .then((userDataFromDb) => {
+            commit("SET_USER", {
+              displayName: user.displayName,
+              email: user.email,
+              ...userDataFromDb,
+            }).catch((err) => {
+              console.error("Error getting documents", err);
+            });
+          });
       } else {
         commit("SET_USER", null);
       }
     },
-  }
+  },
 });

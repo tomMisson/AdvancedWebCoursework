@@ -27,7 +27,7 @@ export default {
   margin-top: 30px;
 }
 
-h1{
+h1 {
   text-align: left;
 }
 </style>

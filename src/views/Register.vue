@@ -71,7 +71,6 @@
   </div>
 </template>
 
-
 <script>
 import firebase from "firebase";
 import { reactive, ref } from "vue";
