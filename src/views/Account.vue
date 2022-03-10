@@ -3,10 +3,10 @@
     <template v-if="user">
       <h1>Welcome back {{ user?.displayName }}</h1>
       <br />
-      <p>Email address: {{ user?.email }}</p>
-      <p>Account Type: {{ user?.accountType }}</p>
-      <p>Phone number: {{ user?.phonenumber }}</p>
-      <p>Address: {{ user?.address }}</p>
+      <p id="accountEmail">Email address: {{ user?.email }}</p>
+      <p id="accountType">Account Type: {{ user?.accountType }}</p>
+      <p id="accountNumber">Phone number: {{ user?.phonenumber }}</p>
+      <p id="accountAddress">Address: {{ user?.address }}</p>
 
       <h2>Submitted data</h2>
 
@@ -68,7 +68,7 @@ export default {
           '<div class="card" id="' +
           doc.id +
           '"> <div class="card-header" id="' +
-          '"> <h5 class="mb-0"> <button class="btn" data-bs-toggle="collapse" ' +
+          '"> <h5 class="mb-0"> <button id="card-btn" class="btn" data-bs-toggle="collapse" ' +
           ' data-bs-target="#collapse-' +
           count +
           '" aria-expanded="false" aria-controls="collapse-' +
