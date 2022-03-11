@@ -46,7 +46,7 @@ jobs:
   ################################
   deploy:
     name: Deploy to Firebase
-    needs: [lint, build_and_test]
+    needs: [lint]
     runs-on: ubuntu-latest
     steps:
       - name: Extract branch name
